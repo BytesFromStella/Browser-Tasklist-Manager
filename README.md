@@ -20,7 +20,8 @@ This project's main purpose is to produce a barebones task list program in the b
 The colorshift animation is quite straightforward in how it works.
 
 ```css
-animation: colorShift 8s ease infinite alternate;```
+animation: colorShift 8s ease infinite alternate;
+```
 - Animation: Specifies that this object will use an animation.
 - 8s: The duration of the animation. It can be tweaked to be faster or slower.
 - ease: A built-in timing function used in CSS that controls the curvature of the speed (slow start, speeds up in the middle, slows down near the end).
