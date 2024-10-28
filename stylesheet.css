@@ -80,7 +80,7 @@ li {
     display: grid;
     align-items: center;
     justify-content: center;
-    border: 0.2rem solid black;
+    border: 0.2rem linear-gradient black;
     gap: 10px;
     margin: 6px;
     padding: 12px;

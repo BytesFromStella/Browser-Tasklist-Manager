@@ -55,3 +55,4 @@ submitText.addEventListener("keydown", function(event) {
        event.preventDefault; // Prevents the browser from treating this as a web submission form
     }
 });
+

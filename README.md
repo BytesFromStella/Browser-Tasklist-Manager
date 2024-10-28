@@ -1,6 +1,8 @@
 # Task List Program
 
-This project's main purpose is to at minimum produce a barebones task list program in the browser.
+This project's main purpose is to at minimum produce a barebones task list program in the browser. This project should do me good in the future and to refresh all my skill within web development that has been dormant for tooooo long. 
+Also other people can read what I write. Isn't that cool?
+I will be using ChatGPT to figure out concepts and arguments to use in my code, but NONE of the code is copy-pasted. Everything is manually written by me and if there's something new that I didn't understand from before I will either document it here or comment it directly in the code!
 
 ## Core Features
 
@@ -21,6 +23,14 @@ Barebones website code with all the essentials:
 ```html
 &#169;
 ```
+
+## CSS code
+For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to go on a website where everything is leaned to the left?
+
+### Body 
+- I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
+- Text-align is centred
+- The background consists of 5 different colors which combined creates a hue. 
 
 ## Additional Features
 
