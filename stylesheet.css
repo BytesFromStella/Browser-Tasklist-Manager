@@ -1,6 +1,7 @@
 
 html {
     height: 100%;
+    zoom: 125%; /* Global scaling for the webpage to be more readable */
 }
 
 body {
@@ -73,13 +74,15 @@ ul {
     /* Style type removes the dots from ULs. Removing left makes the objects centred  */
     list-style-type: none;   
     padding-left: 0;
-
 }
 
 li {
     display: grid;
     align-items: center;
     justify-content: center;
+    border: 0.2rem solid black;
     gap: 10px;
+    margin: 6px;
+    padding: 12px;
 }
 
