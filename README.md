@@ -18,6 +18,9 @@ Barebones website code with all the essentials:
 - Borders around each gridbox element
 - Styled buttons and crossed out text for checked items
 - My signature and unicode for the copyright icon
+```html
+&#169;
+```
 
 ## Additional Features
 
