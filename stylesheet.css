@@ -1,0 +1,85 @@
+
+html {
+    height: 100%;
+}
+
+body {
+    /* Fun fact: Comic Sans is the most accessible font for dyslexic people. Also it's funny */
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-align: center;
+    background: linear-gradient(90deg, #F4C6F2, #F3D7F4, #E2D2F6, #BDEDFB, #AAE0F0);
+    background-size: 1000% 1000%; /* Expands the background canvas to give the browser space to scroll through the colors */
+    animation: colorShift 8s linear infinite alternate;
+    /* Linear makes the animation go from 0% to 100% at a constant speed */
+}
+
+@keyframes colorShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+main {
+    align-items: center;
+}
+
+#submitButton {
+    outline: #1FCE6D;
+    outline-width: medium;
+    cursor: pointer;
+}
+
+/* Hovering over the submit button makes your cursor point and makes the button green */
+#submitButton:hover {
+    background-color:#1fce2e;
+}
+
+#taskDelete {
+    justify-content: right;
+}
+
+#taskComplete {
+    size: 3rem;
+}
+
+#taskDelete:hover {
+    background-color: red;
+    outline-width: medium;
+    cursor: pointer;
+}
+
+ /* This checks for any ID that contains a label and a checkbox in a True state */
+input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    text-shadow:
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white;
+    outline: 12px;
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5%;
+    /* Style type removes the dots from ULs. Removing left makes the objects centred  */
+    list-style-type: none;   
+    padding-left: 0;
+
+}
+
+li {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
