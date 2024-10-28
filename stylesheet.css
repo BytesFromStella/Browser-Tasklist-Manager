@@ -80,9 +80,12 @@ li {
     display: grid;
     align-items: center;
     justify-content: center;
-    border: 0.2rem linear-gradient black;
     gap: 10px;
     margin: 6px;
     padding: 12px;
-}
 
+    border-image-source: linear-gradient(45deg, #F3D7F4, #BDEDFB);
+    border-style: solid;
+    border-image-slice: 1;
+    border-width: 6px;
+}

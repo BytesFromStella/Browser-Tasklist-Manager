@@ -27,6 +27,11 @@ Barebones website code with all the essentials:
 ## CSS code
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to go on a website where everything is leaned to the left?
 
+### List items
+For some reason, gradients are not supported for borders. So I must come up with an alternative solution:
+- Use **border-image-source** to define the gradient
+- Use **border-image-slice: 1;** to fill the border with the gradient
+- Use **border-style: solid;** to make it into a solid color. I might make this transparent instead (tehe, get it?)
 ### Body 
 - I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
 - Text-align is centred
