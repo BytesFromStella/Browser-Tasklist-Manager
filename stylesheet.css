@@ -84,7 +84,7 @@ li {
     margin: 6px;
     padding: 12px;
 
-    border-image-source: linear-gradient(45deg, #F3D7F4, #BDEDFB);
+    border-image-source: linear-gradient(30deg, #8f8f8f, #cecece);
     border-style: solid;
     border-image-slice: 1;
     border-width: 6px;

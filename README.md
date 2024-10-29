@@ -19,13 +19,30 @@ Barebones website code with all the essentials:
 - Local submission form and ADD button
 - Borders around each gridbox element
 - Styled buttons and crossed out text for checked items
-- My signature and unicode for the copyright icon
+- My signature and unicode for the copyright icon:
 ```html
 &#169;
 ```
 
-## CSS code
-For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to go on a website where everything is leaned to the left?
+
+## CSS / Styling sheet
+For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
+### Colorshift Animation
+The colorshift animation is quite straightforward in how it works.
+```css
+animation: colorShift 8s ease infinite alternate;
+```
+- Animation: Specifies that this object will use an animation.
+- 8s: The duration of the animation. It can be tweaked to be faster or slower.
+- ease: A built-in timing function used in CSS that controls the curvature of the speed (slow start, speeds up in the middle, slows down near the end).
+- infinite: Specifies that the animation will run infinitely.
+- alternate: The animation will play from 0% to 100%, then back from 100% to 0%.
+
+## JavaScript - coreTaskList
+TBC
+
+## JavaScript - localStorageHandler
+TBC
 
 ### List items
 For some reason, gradients are not supported for borders. So I must come up with an alternative solution:
@@ -42,15 +59,3 @@ For some reason, gradients are not supported for borders. So I must come up with
 - Local saving of task list data
 - Align task list items into grid boxes with CSS
 
-## Colorshift Animation
-
-The colorshift animation is quite straightforward in how it works.
-
-```css
-animation: colorShift 8s ease infinite alternate;
-```
-- Animation: Specifies that this object will use an animation.
-- 8s: The duration of the animation. It can be tweaked to be faster or slower.
-- ease: A built-in timing function used in CSS that controls the curvature of the speed (slow start, speeds up in the middle, slows down near the end).
-- infinite: Specifies that the animation will run infinitely.
-- alternate: The animation will play from 0% to 100%, then back from 100% to 0%.

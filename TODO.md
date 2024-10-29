@@ -1,16 +1,49 @@
-# High priority
+# High Priority
 Stuff that I absolutely need to add to make it go from barebones to fleshed out. 
-- Add local storage of input data
-- Add a menu; Either to each element or on the right side when you select an element
-- Ensure readability of the website
+## Title and item description
+Allow the user to input both a title and description for each item.
+## Add local storage of input data
+Allow the user to close the page and reopen it at a later point to resume use
+## Color marking with gradients
+Change the gradient around the list item box depending on the state of the item:
+### Grey/white
+Currently editing or creating | No time limit
+### Yellow/?
+Time limited item.
+### Green/?
+Completed item.
+### Red/?
+Item past expiration date/time.
+## Add a menu
+Either to each element or on the right side when you select an element
+## Ensure readability of the website
+Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.
+## Clear ALL button
+Erases all tasks currently being displayed and stored in the local client
 
-# Medium priority
+# Medium Priority
 Stuff that I could add, but isn't necessarily essential.
-- Create a more dynamic, aestethicly pleasing experience
-
+## Create a more dynamic, aestethicly pleasing experience
+Anything minor that will make the website look more modern, authentic and feature rich. Items that doesn't deserve it's own section goes here:
+### Example
+which is where I would write more about it
+## Task editing
+Allow existing tasks to be edited by either hitting an "edit" button or double-clicking it
+## Add a date for completion or a custom time limit / timer. 
+This time should use "in x amount of days/hours/minutes".
+Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.
+## Reorganize tasks
+Allow tasks to be moved around based on importance/priority by the user.
 
 # Low Priority
 Other cool stuff that I might come up with will go here.
-- Star fall or rain animation
-- Toggle different hues for the background with a few buttons. Alternatively being able to pick these colors if I'm REALLY bored.
+## Link to a personal website with my portfolio (and make the website of course)
+This is where I would babble about myself and the stuff I've made so far. Like a menu with the different projects containing a description, snapshot and title like you would see on YouTube.
+## Adding images 
+Allow adding and linking images to tasks that are automatically resized to the task box. These images shouldn't be stored by itself, but should point to the path used for the image. That means you can link an image from the internet or link one from your local computer.
+Could also make it allow drag&drop into each task box.
+## Random image picker
+Click a button to randomly select an image that is pulled from an API.
+## Star/rain animation and different hues
+Allow the user to toggle between preset hues for the background with a few buttons. Alternatively I'll allow the user to pick the hue themself.
 

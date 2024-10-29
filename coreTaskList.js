@@ -1,3 +1,5 @@
+// CORE TASK LIST GENERATION FUNCTIONALITY
+
 // Defining static variables that contain the values submitted, that we want to interact with //
 const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");
@@ -47,6 +49,8 @@ function handleClick(event) {
     
 }
 
+// Ensures the function is global (can be accessed anywhere). You do not specify the parameter for the function when making it global
+window.handleClick = handleClick;
 
 addTask.addEventListener("click", handleClick);  //Adding this AFTER the function so it doesn't call something undefined.
 submitText.addEventListener("keydown", function(event) {
@@ -55,4 +59,3 @@ submitText.addEventListener("keydown", function(event) {
        event.preventDefault; // Prevents the browser from treating this as a web submission form
     }
 });
-
