@@ -1,4 +1,4 @@
-# High Priority
+# **High Priority**
 Stuff that I absolutely need to add to make it go from barebones to fleshed out. 
 ## Title and item description
 Allow the user to input both a title and description for each item.
@@ -21,7 +21,7 @@ Assess whether all the text is readable and that the user is able to navigate ar
 ## Clear ALL button
 Erases all tasks currently being displayed and stored in the local client
 
-# Medium Priority
+# **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
 ## Create a more dynamic, aestethicly pleasing experience
 Anything minor that will make the website look more modern, authentic and feature rich. Items that doesn't deserve it's own section goes here:
@@ -35,7 +35,7 @@ Should also allow you to change the "time remaining" to the set date and time by
 ## Reorganize tasks
 Allow tasks to be moved around based on importance/priority by the user.
 
-# Low Priority
+# **Low Priority**
 Other cool stuff that I might come up with will go here.
 ## Link to a personal website with my portfolio (and make the website of course)
 This is where I would babble about myself and the stuff I've made so far. Like a menu with the different projects containing a description, snapshot and title like you would see on YouTube.
