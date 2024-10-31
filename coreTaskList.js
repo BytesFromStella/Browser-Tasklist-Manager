@@ -1,6 +1,7 @@
 // CORE TASK LIST GENERATION FUNCTIONALITY
 
 // Defining static variables that contain the values submitted, that we want to interact with //
+var taskID = 0; // Initializing the ID counter 
 const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");
 const deleteButton = document.getElementById("taskDelete");
@@ -10,6 +11,7 @@ function handleClick(event) {
     console.log("This actually works, good job");
 
     // Defining each element need for creating a new list item
+    taskID++; console.log(taskID);
     var newTask = document.createElement("li");
     const newCheckbox = document.createElement("input");
     const deleteTask = document.createElement("button");
@@ -52,7 +54,7 @@ function handleClick(event) {
 // Ensures the function is global (can be accessed anywhere). You do not specify the parameter for the function when making it global
 window.handleClick = handleClick;
 
-addTask.addEventListener("click", handleClick);  //Adding this AFTER the function so it doesn't call something undefined.
+addTask.addEventListener("click", handleClick);  // Adding this AFTER the function so it doesn't call something undefined.
 submitText.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         handleClick();
