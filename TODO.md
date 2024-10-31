@@ -3,7 +3,7 @@ Stuff that I absolutely need to add to make it go from barebones to fleshed out.
 ## Title and item description
 Allow the user to input both a title and description for each item.
 ## Add local storage of input data
-Allow the user to close the page and reopen it at a later point to resume use
+- Allow the user to close the page and reopen it at a later point to resume use.
 ## Color marking with gradients
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
@@ -20,6 +20,8 @@ Either to each element or on the right side when you select an element
 Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.
 ## Clear ALL button
 Erases all tasks currently being displayed and stored in the local client
+## Add error message if the user has disabled device storage
+Simply display some red text on the page encouraging the user to renable the feature and why they should do that.
 
 # **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
