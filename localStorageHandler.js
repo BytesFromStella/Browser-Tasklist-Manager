@@ -4,7 +4,7 @@ const storageHandler = {
     handleClick: function(event) {
         let storeTaskItem = this.newTask; // Accesses the current instance of newTask from coreTaskList.js
         let storeTaskID = this.taskID;
-
+        // Testing line
         localStorage.setItem(storeTaskID, storeTaskItem);
 
         while (localStorage.getItem(storeTaskID !== null)) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
