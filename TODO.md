@@ -2,9 +2,14 @@
 Stuff that I absolutely need to add to make it go from barebones to fleshed out. 
 ## Title and item description
 Allow the user to input both a title and description for each item.
+
 ## ~~Add local storage of input data~~
 - ~~Allow the user to close the page and reopen it at a later point to resume use~~
 COMPLETED 04.11.2024
+
+## Add error message if the user has disabled device storage
+Simply display some red text on the page encouraging the user to renable the feature and why they should do that.
+
 ## Color marking with gradients
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
@@ -15,26 +20,31 @@ Time limited item.
 Completed item.
 ### Red/?
 Item past expiration date/time.
+
 ## Add a menu
 Either to each element or on the right side when you select an element
+
 ## Ensure readability of the website
 Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.
+
 ## Clear ALL button
 Erases all tasks currently being displayed and stored in the local client
-## Add error message if the user has disabled device storage
-Simply display some red text on the page encouraging the user to renable the feature and why they should do that.
 
 # **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
+
 ## Create a more dynamic, aestethicly pleasing experience
 Anything minor that will make the website look more modern, authentic and feature rich. Items that doesn't deserve it's own section goes here:
 ### Example
 which is where I would write more about it
+
 ## Task editing
 Allow existing tasks to be edited by either hitting an "edit" button or double-clicking it
+
 ## Add a date for completion or a custom time limit / timer. 
 This time should use "in x amount of days/hours/minutes".
 Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.
+
 ## Reorganize tasks
 Allow tasks to be moved around based on importance/priority by the user.
 
