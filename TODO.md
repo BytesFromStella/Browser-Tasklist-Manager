@@ -2,8 +2,9 @@
 Stuff that I absolutely need to add to make it go from barebones to fleshed out. 
 ## Title and item description
 Allow the user to input both a title and description for each item.
-## Add local storage of input data
-- Allow the user to close the page and reopen it at a later point to resume use.
+## ~~Add local storage of input data~~
+- ~~Allow the user to close the page and reopen it at a later point to resume use~~
+COMPLETED 04.11.2024
 ## Color marking with gradients
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
