@@ -3,7 +3,7 @@
 // Defining static variables that contain the values submitted, that we want to interact with //
 var taskID = 0; // Initializing the ID counter 
 
-const completeStatus = document.getElementById("")
+const completeStatus = document.getElementById("taskComplete")
 const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");
 const deleteButton = document.getElementById("taskDelete");
@@ -30,6 +30,11 @@ function createTaskElement(taskID, title, completed) {
     const newCheckbox = document.createElement("input");
     newCheckbox.type = "checkbox";
     newCheckbox.checked = completed; // To easily extract the boolean for later use
+
+    // Adding an event listener so the state of the checkbox is saved
+    newCheckbox.addEventListener("change", function() {
+        storageHandler.saveTask(taskID, {completed: newCheckbox.checked});
+    })
 
     newTask.appendChild(titleField);
     newTask.appendChild(newCheckbox);
