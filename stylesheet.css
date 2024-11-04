@@ -28,14 +28,23 @@ main {
 }
 
 #submitButton {
-    outline: #1FCE6D;
+    outline: #1cff82c4;
     outline-width: medium;
     cursor: pointer;
+    padding: 0.5em 3em;
+    border: .20em solid var(--glow-color);
+    border-radius: 1em;
+    font-weight: bold;
+    transition: all 0.3s;
+    overflow: hidden;
+    box-shadow: 0 0 1em .15em #000000;
 }
 
 /* Hovering over the submit button makes your cursor point and makes the button green */
 #submitButton:hover {
-    background-color:#1fce2e;
+    background-color:#1cff82c4;
+    box-shadow: 0 0 2em .35em #000000;
+
 }
 
 #taskDelete {
