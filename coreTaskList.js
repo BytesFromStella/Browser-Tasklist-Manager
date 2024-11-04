@@ -2,62 +2,77 @@
 
 // Defining static variables that contain the values submitted, that we want to interact with //
 var taskID = 0; // Initializing the ID counter 
+
+const completeStatus = document.getElementById("")
 const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");
 const deleteButton = document.getElementById("taskDelete");
 
-function handleClick(event) {
-    // Test message to show the function runs when you click "add"
-    console.log("This actually works, good job");
+function createTaskElement(taskID, title, completed) {
+    console.log("Creating new DOM object");
 
-    // Defining each element need for creating a new list item
-    taskID++; console.log(taskID);
+    // Creating each HTML object to append to the HTML document
     var newTask = document.createElement("li");
+    newTask.id = taskID; // Creates a new attribute to the object. So it'll contain the HTML object AND the ID key-value pair
+    
+    // the || symbol is an OR operator. If there isn't a value, it'll use "New task" to catch any empty entries //
+    const titleField = document.createElement("label");
+    titleField.id = "taskPoint";
+    titleField.textContent = title;
+    
+    // Defining the delete button. It doesn't need to be appended to localStorage
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.id = "taskDelete";
+    deleteButton.textContent = "Delete"; 
+    
+    // We reference the constant and define the type it's supposed to be
     const newCheckbox = document.createElement("input");
-    const deleteTask = document.createElement("button");
-    const taskLabel = document.createElement("label");
-
-    // We reference the constant(/variable) and define the type it's supposed to be
     newCheckbox.type = "checkbox";
-    newCheckbox.id = "taskComplete";
+    newCheckbox.checked = completed; // To easily extract the boolean for later use
 
-    // Defining the delete button
-    deleteTask.type = "button";
-    deleteTask.id = "taskDelete";
-    deleteTask.textContent = "Delete";
-
-     // the || symbol is an OR operator. If there isn't a value, it'll use "New task" to catch any empty entries //
-    taskLabel.id = "taskPoint";
-    taskLabel.textContent = submitText.value || "New task";
-
+    newTask.appendChild(titleField);
     newTask.appendChild(newCheckbox);
-    newTask.appendChild(taskLabel);
-    newTask.appendChild(deleteTask);
+    newTask.appendChild(deleteButton);
     
-    document.getElementById("taskList").appendChild(newTask);
-    
-    
-    // Clear the value for potential later use
-    submitText.value = "";
-    console.log(newTask, newCheckbox, deleteTask);
-    
-    // You have to keep the delete function inside the handleClick function to attach it to EACH list element individually
-    function deleteFunc(event){
-        event.target.parentNode.remove();
-    }
-    
-    
-    deleteTask.addEventListener("click", deleteFunc);
-    
+
+    // You have to define the delete function when creating the list item for it to work as intended.
+    deleteButton.addEventListener("click", function() {
+        newTask.remove();
+        storageHandler.deleteTask(taskID);
+    })
+
+
+    return newTask;
 }
 
-// Ensures the function is global (can be accessed anywhere). You do not specify the parameter for the function when making it global
-window.handleClick = handleClick;
+function handleClick(event) {
+    // Test message to show the function runs when you click "add"
+    console.log("Running handleClick");
+    const taskID = storageHandler.generateUniqueID();
+    const title = submitText.value || "New task";
+    const completed = false;
 
+    const newTask = createTaskElement(taskID, title, completed);
+    document.getElementById("taskList").appendChild(newTask);
+
+    // Clear the submit form field for additional entries
+    submitText.value = "";
+
+    storageHandler.saveTask(taskID, {
+        id: taskID,
+        title: title,
+        completed: completed
+    })
+}
+
+// Event listeners
 addTask.addEventListener("click", handleClick);  // Adding this AFTER the function so it doesn't call something undefined.
 submitText.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         handleClick();
-       event.preventDefault; // Prevents the browser from treating this as a web submission form
+        event.preventDefault(); // Prevents the browser from treating this as a web submission form
+        }
     }
-});
+)
+
