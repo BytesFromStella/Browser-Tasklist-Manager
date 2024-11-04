@@ -89,6 +89,5 @@ This function is called inside handleClick in coreTaskList. It will simply grab 
 
 ## Additional Features
 
-- Local saving of task list data
-- Align task list items into grid boxes with CSS
+Will be written down here
 
