@@ -29,9 +29,11 @@ Barebones website code with all the essentials:
 
 ## CSS / Styling sheet
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
+
 ### Object structuring
 Every list item is currently display in a gridbox. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
 The objects currently are allowed to have different heights, but this will change in the future. They are still aligned correctly.
+
 ### Colorshift Animation
 The colorshift animation is quite straightforward in how it works.
 ```css
@@ -48,6 +50,7 @@ For some reason, gradients are not supported for borders. So I must come up with
 - Use **border-image-source** to define the gradient
 - Use **border-image-slice: 1;** to fill the border with the gradient
 - Use **border-style: solid;** to make it into a solid color. I might make this transparent instead (tehe, get it?)
+
 ### Body 
 - I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
 - Text-align is centred
@@ -62,6 +65,7 @@ The code defines all the HTML-IDs like the checkbox, label and button at the sta
 
 ## JavaScript - localStorageHandler
 I defined 4 seperate functions that the storageHandler uses:
+
 ### saveTask
 Runs every time a new DOM(list)-item is created. The script created a key-value pair; taskID is the key and taskData is the value.
 taskData consists of the task ID, title and completion status (boolean).
@@ -80,10 +84,12 @@ By calling storageHandler.saveTask(...ID, ...key:value pair), you'll be able to 
 This tasks retrives all the key-value pairs from the built-in localStorage in the browser.
 I used a for-loop to iterate over every value since the ID's are generated in a chronological order. The function will retrieve all the IDs based on the length of the total items in localStorage (using localStorage.length). It will retrieve all the items EVEN if an ID is deleted.
 Let's say the total amount of items is 5. You delete ID 2, 3 and 4. (ID 0 is not generated) The total item count reminaing is then 2. localStorage will grab all the pairs regardless of gaps.
+
 ## generateUniqueID
 This function will generate a unique ID every time a DOM object is created and saved into localStorage. The id is structed as "ID-{number}" inside localStorage.
 That means no task can have the ID value 0. They always start from 1. This will have no impact on further code and features and is merely an aestethic decision.
 ## deleteTask
+
 This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the key-value pair with that ID in localStorage.
 
 
