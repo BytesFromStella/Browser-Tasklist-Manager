@@ -19,7 +19,7 @@ const storageHandler = {
             var key = localStorage.key(count);
             const taskData = JSON.parse(localStorage.getItem(key));
 
-            const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.completed);
+            const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed);
             insertToTarget.appendChild(taskElement);
         } 
         console.log("Tasks successfully loaded");

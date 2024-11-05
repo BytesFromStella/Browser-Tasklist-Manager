@@ -11,8 +11,15 @@
 
 <main>
     
-    <input type="text" placeholder="Submit a task"  id="taskField" required> <button type="submit" id="submitButton">Add</button >
+    <!-- Title Input Field -->
+    <input type="text" placeholder="Task Title"  id="taskField" required>
     
+    <!-- Description Input Field -->
+    <textarea placeholder="Task Description" id="taskDescriptionField" required rows="3"></textarea>
+    
+    <button type="submit" id="submitButton">Add</button>
+    
+    <!-- Task List-->
     <ul id="taskList">
         <li>
             <input type="checkbox" id="taskComplete">

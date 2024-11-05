@@ -5,10 +5,11 @@ var taskID = 0; // Initializing the ID counter
 
 const completeStatus = document.getElementById("taskComplete")
 const addTask = document.getElementById("submitButton");
-const submitText = document.getElementById("taskField");
-const deleteButton = document.getElementById("taskDelete");
+const submitText = document.getElementById("taskField");   // Title
+const descriptionText = document.getElementById("taskDescriptionField"); // Description
+const deleteButton = document.getElementById("taskDelete"); 
 
-function createTaskElement(taskID, title, completed) {
+function createTaskElement(taskID, title, description, completed) {
     console.log("Creating new DOM object");
 
     // Creating each HTML object to append to the HTML document
@@ -19,7 +20,11 @@ function createTaskElement(taskID, title, completed) {
     const titleField = document.createElement("label");
     titleField.id = "taskPoint";
     titleField.textContent = title;
-    
+
+    // Description
+    const descriptionField = document.createElement("p");
+    descriptionField.textContent = description;
+ 
     // Defining the delete button. It doesn't need to be appended to localStorage
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
@@ -37,6 +42,7 @@ function createTaskElement(taskID, title, completed) {
     })
 
     newTask.appendChild(titleField);
+    newTask.appendChild(descriptionField);
     newTask.appendChild(newCheckbox);
     newTask.appendChild(deleteButton);
     
@@ -55,21 +61,27 @@ function handleClick(event) {
     // Test message to show the function runs when you click "add"
     console.log("Running handleClick");
     const taskID = storageHandler.generateUniqueID();
-    const title = submitText.value || "New task";
+    const title = submitText.value || "Task Title";
+    const description = descriptionText.value || "";  // Default to an empty description
     const completed = false;
 
-    const newTask = createTaskElement(taskID, title, completed);
+    const newTask = createTaskElement(taskID, title, description, completed);
     document.getElementById("taskList").appendChild(newTask);
 
-    // Clear the submit form field for additional entries
+    // Clear both input fields for additional entries
     submitText.value = "";
+    descriptionText.value = "";
 
+    // Save to local storage
     storageHandler.saveTask(taskID, {
         id: taskID,
         title: title,
+        description: description,
         completed: completed
     })
 }
+
+
 
 // Event listeners
 addTask.addEventListener("click", handleClick);  // Adding this AFTER the function so it doesn't call something undefined.
@@ -77,7 +89,5 @@ submitText.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         handleClick();
         event.preventDefault(); // Prevents the browser from treating this as a web submission form
-        }
     }
-)
-
+});

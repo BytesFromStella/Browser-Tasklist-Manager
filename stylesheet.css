@@ -24,18 +24,22 @@ body {
 }
 
 main {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
     align-items: center;
+    gap: 10px; /* Space between elements */
 }
+
 
 #submitButton {
     outline: #1cff82c4;
     outline-width: medium;
     cursor: pointer;
-    padding: 0.5em 3em;
+    padding: 0.7em 5em;
     border: .20em solid var(--glow-color);
     border-radius: 1em;
     font-weight: bold;
-    transition: all 0.3s;
+    transition: all 0.4s;
     overflow: hidden;
     box-shadow: 0 0 1em .15em #000000;
 }
@@ -45,6 +49,21 @@ main {
     background-color:#1cff82c4;
     box-shadow: 0 0 2em .35em #000000;
 
+}
+
+#taskField {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    width: 20%;
+    padding: 5px;
+    font-size: 1rem;
+}
+
+#taskDescriptionField {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    width: 30%;
+    padding: 0 0 40px 5px;
+    font-size: 1rem;
+    resize: none; /* Disables resizing */
 }
 
 #taskDelete {
