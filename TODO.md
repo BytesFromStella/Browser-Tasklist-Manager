@@ -1,7 +1,8 @@
 # **High Priority**
 Stuff that I absolutely need to add to make it go from barebones to fleshed out. 
-## Title and item description
-Allow the user to input both a title and description for each item.
+## ~~Title and item description~~
+~~Allow the user to input both a title and description for each item.~~
+COMPLETED 05.11.2024
 
 ## ~~Add local storage of input data~~
 - ~~Allow the user to close the page and reopen it at a later point to resume use~~
