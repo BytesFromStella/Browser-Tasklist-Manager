@@ -30,6 +30,11 @@ main {
     gap: 10px; /* Space between elements */
 }
 
+#storageUnavailable {
+    display: none;
+    color: red;
+    box-shadow: 0 0 2em .35em #000000;
+}
 
 #submitButton {
     outline: #1cff82c4;
@@ -70,14 +75,14 @@ main {
     justify-content: right;
 }
 
-#taskComplete {
-    size: 3rem;
-}
-
 #taskDelete:hover {
     background-color: red;
     outline-width: medium;
     cursor: pointer;
+}
+
+#taskComplete {
+    size: 3rem;
 }
 
  /* This checks for any ID that contains a label and a checkbox in a True state */
