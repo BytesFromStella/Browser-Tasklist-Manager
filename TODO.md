@@ -8,13 +8,14 @@ COMPLETED 05.11.2024
 - ~~Allow the user to close the page and reopen it at a later point to resume use~~
 COMPLETED 04.11.2024
 
-## Add error message if the user has disabled device storage
-Simply display some red text on the page encouraging the user to renable the feature and why they should do that.
+## ~~Add error message if the user has disabled device storage~~
+~~Simply display some red text on the page encouraging the user to renable the feature and why they should do that. Functionality will be saved in localStorageHandler since it's relevant to the built-in localStorage in JS.~~
+COMPLETED 10.11.2024
 
 ## Color marking with gradients
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
-Currently editing or creating | No time limit
+Currently editing or creating | No time limit.
 ### Yellow/?
 Time limited item.
 ### Green/?
