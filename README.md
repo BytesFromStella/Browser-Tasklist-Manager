@@ -17,18 +17,19 @@ Why use a chatGPT model for this? Researching all the individual parts manually 
 ### HTML code
 Barebones website code with all the essentials:
 - Webpage title
-- Title text on the actual site
+- Title text on the top of the displayed website
 - Local submission form and ADD button
-- Borders around each gridbox element
+- An unordered list for new entries to appear in
 - Styled buttons and crossed out text for checked items
 - My signature and unicode for the copyright icon:
 ```html
 &#169; Stella Tvenning
 ```
-
+It also contains a hidden error message if the user doesn't allow cookies or have localStorage disabled.
 
 ## CSS / Styling sheet
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
+Better styling work and documentation will be added at a later point 
 
 ### Object structuring
 Every list item is currently display in a gridbox. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
@@ -60,10 +61,24 @@ For some reason, gradients are not supported for borders. So I must come up with
 ## JavaScript - coreTaskList
 This script coreTaskList (CTL) originally had all the handlers and code inside handleClick. This was later refactored and modularized to be more reusable in other areas like localStorageHandler (LSH). The key-value pairs are generated here and it calls the function from the LSH-script.
 
-The code defines all the HTML-IDs like the checkbox, label and button at the start as a constant. We don't want to modify the types before they are used in a new value.
+The code defines all the HTML-IDs like the checkbox, label and button at the start as a constant. We don't want to modify the types before they are used in a new entry.
 
 
 ## JavaScript - localStorageHandler
+Every function has a condition check called storageTest. It will attempt to write and remove an entry to localStorage. The condition check used in each function uses the following template:
+```javascript
+if (!this.storageTest()) { 
+            console.error("Cannot complete operation. Check localStorage permissions");
+            return;
+        }
+```
+This will make the function return the error message in the console and since the condition check was false, it'll also display HTML with red error text. Oooo, red text is scaaaaaaaaary!
+The exclamation mark "negates" the boolean, effectively making it a negative condition check. So if the condition check returns false, it'll execute the catch block in the existing condition check and the block in the respective function called. In this case:
+```javascript
+            console.error("Cannot complete operation. Check localStorage permissions");
+```
+If you cannot use localStorage, any IDs generates will probably be duplicate or invalid, but it won't incapacitate the application or cause a hang.
+
 I defined 4 seperate functions that the storageHandler uses:
 
 ### saveTask
@@ -79,21 +94,19 @@ By adding another variable to saveTask, you can call saveTask to edit or add dat
 By calling storageHandler.saveTask(...ID, ...key:value pair), you'll be able to add new points to the entry.
 
 
-### loadAllTasks
-
+### loadAllTask
 This tasks retrives all the key-value pairs from the built-in localStorage in the browser.
 I used a for-loop to iterate over every value since the ID's are generated in a chronological order. The function will retrieve all the IDs based on the length of the total items in localStorage (using localStorage.length). It will retrieve all the items EVEN if an ID is deleted.
+Beware that the index starts at 1, not 0. The zero index will be reserved for potential future use.
 Let's say the total amount of items is 5. You delete ID 2, 3 and 4. (ID 0 is not generated) The total item count reminaing is then 2. localStorage will grab all the pairs regardless of gaps.
 
 ## generateUniqueID
 This function will generate a unique ID every time a DOM object is created and saved into localStorage. The id is structed as "ID-{number}" inside localStorage.
 That means no task can have the ID value 0. They always start from 1. This will have no impact on further code and features and is merely an aestethic decision.
-## deleteTask
 
+## deleteTask
 This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the key-value pair with that ID in localStorage.
 
-
 ## Additional Features
-
 Will be written down here
 
