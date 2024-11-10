@@ -10,7 +10,10 @@
 <header><h1>Task List Manager</h1></header>
 
 <main>
-    
+    <div id="storageUnavailable"> <h1>ERROR! Local storage is not available. Did you disable cookies?</h1>
+        New tasks will NOT save. You might have duplicate IDs and some features might break.
+        Check out this link on how to re-enable it: https://allaboutcookies.org/how-to-manage-cookies
+    </div>
     <!-- Title Input Field -->
     <input type="text" placeholder="Task Title"  id="taskField" required>
     
@@ -21,11 +24,6 @@
     
     <!-- Task List-->
     <ul id="taskList">
-        <li>
-            <input type="checkbox" id="taskComplete">
-            <label id="taskPoint" placeholder="New tasks appear here">Tasks will look like this</label>
-            <button type="button" id=taskDelete>Delete</button>
-        </li>
         <!-- Example gridbox-->
     </ul>
 
