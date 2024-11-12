@@ -4,6 +4,7 @@ const storageHandler = {
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
             const test = '__localStorage_test__';
+            /*Object.freeze(localStorage);*/ // Flip to resume/pause error condition. Test code for error handling
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
             return true;
