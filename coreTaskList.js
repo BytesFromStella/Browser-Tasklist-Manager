@@ -8,6 +8,7 @@ const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");   // Title
 const descriptionText = document.getElementById("taskDescriptionField"); // Description
 const deleteButton = document.getElementById("taskDelete"); 
+const deleteAllButton = document.getElementById("deleteAllButton");
 
 function createTaskElement(taskID, title, description, completed) {
     console.log("Creating new DOM object");
@@ -84,6 +85,11 @@ function handleClick(event) {
 
 
 // Event listeners
+window.onload = function deleteAllTasks() {
+    storageHandler.deleteAll();
+    deleteAllButton.addEventListener("click", deleteAllTasks());
+} 
+
 addTask.addEventListener("click", handleClick);  // Adding this AFTER the function so it doesn't call something undefined.
 submitText.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {

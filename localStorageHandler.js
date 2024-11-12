@@ -1,7 +1,5 @@
 // LOCAL CLIENT STORAGE HANDLER
 
-
-
 const storageHandler = {
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
@@ -72,6 +70,17 @@ const storageHandler = {
         console.log(taskID);
         localStorage.removeItem(targetID); // No need for conditional statements here. If it can't delete the item, it should throw an error
         console.log("Task deleted successfully")
+    },
+
+    deleteAll: function() {
+        if (confirm("Are you sure you want to delete all tasks? This action cannot be undone.")) {
+            const list = document.getElementById("taskList");
+            list.innerHTML = "";
+            localStorage.clear();
+            alert("All tasks has been permanentely deleted.")
+        } else {
+            console.log("Delete ALL task aborted");
+        }
     }
 }
 
