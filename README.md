@@ -107,6 +107,12 @@ That means no task can have the ID value 0. They always start from 1. This will 
 ## deleteTask
 This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the key-value pair with that ID in localStorage.
 
+## deleteAll
+The event listener is located directly in the HTML element. This functions does 3 simple things:
+1 - Does an alert with a confirm-prompt
+2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared.
+3 - If true/confirmed: executes the built-in command ``localStorage.clear()``
+
 ## Additional Features
 Will be written down here
 

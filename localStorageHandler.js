@@ -74,7 +74,7 @@ const storageHandler = {
     },
 
     deleteAll: function() {
-        if (confirm("Are you sure you want to delete all tasks? This action cannot be undone.")) {
+        if (confirm("Are you sure you want to delete ALL tasks? This action cannot be undone.")) {
             const list = document.getElementById("taskList");
             list.innerHTML = "";
             localStorage.clear();
