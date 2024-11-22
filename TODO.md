@@ -29,8 +29,9 @@ Either to each element or on the right side when you select an element
 ## Ensure readability of the website
 Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.
 
-## Clear ALL button
-Erases all tasks currently being displayed and stored in the local client
+## ~~Clear ALL button~~
+~~Erases all tasks currently being displayed and stored in the local client~~
+COMPLETED 22.11.24 (slow implementation cus sick and busy)
 
 # **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
