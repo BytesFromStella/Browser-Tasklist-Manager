@@ -4,13 +4,13 @@ const storageHandler = {
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
             const test = '__localStorage_test__';
-            /*Object.freeze(localStorage);*/ // Flip to resume/pause error condition. Test code for error handling
+            /*Object.freeze(localStorage); // Flip to resume/pause error condition. Test code for error handling */
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
             return true;
         }   catch (e) {
             document.getElementById("storageUnavailable").style.display = "block"; // Makes the error message visible
-            return false;
+            return false;   
         }
     },
 
@@ -20,7 +20,7 @@ const storageHandler = {
             return;
         }
         const existingTask = JSON.parse(localStorage.getItem(taskID)) || {}; // Add the new data or add an empty entry
-        const newTaskData = { ...existingTask, ...taskData }; // Allows you to update existing entries
+        const newTaskData = { ...existingTask, ...taskData }; // Allows you to update/add existing entries
         
         localStorage.setItem(taskID, JSON.stringify(newTaskData)) // Saving it as a JSON will make it alot easier to get the key-value pairs
         console.log("Task successfully saved to localStorage");
