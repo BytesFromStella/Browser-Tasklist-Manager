@@ -36,7 +36,7 @@ main {
     box-shadow: 0 0 2em .35em #000000;
 }
 
-#submitButton {
+#submitButton, #removeAllButton {
     outline: #1cff82c4;
     outline-width: medium;
     cursor: pointer;
@@ -56,16 +56,22 @@ main {
 
 }
 
+#removeAllButton:hover {
+    background-color:#ff1c1cc4;
+    box-shadow: 0 0 2em .35em #000000;
+
+}
+
 #taskField {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    width: 20%;
+    width: 50%;
     padding: 5px;
     font-size: 1rem;
 }
 
 #taskDescriptionField {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    width: 30%;
+    width: 50%;
     padding: 0 0 40px 5px;
     font-size: 1rem;
     resize: none; /* Disables resizing */
@@ -98,11 +104,11 @@ input[type="checkbox"]:checked + label {
 
 ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));;
+    /* Use REPEAT(3, minmax) to limit the amount of items that are display per row with a minimum spacing */
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     margin: 5%;
     /* Style type removes the dots from ULs. Removing left makes the objects centred  */
     list-style-type: none;   

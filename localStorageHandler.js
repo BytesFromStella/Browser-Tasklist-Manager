@@ -14,7 +14,7 @@ const storageHandler = {
         }
     },
 
-    saveTask: function(taskID, taskData) { // Modularized this function to make it reusable
+    saveTask: function(taskID, taskData) { // Modularized this function to make it reusablez
         if (!this.storageTest()) { // The ! does the same as (this.storageTest === false);
             console.error("Saving unavailable. Check localStorage permissions");
             return;

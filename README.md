@@ -55,7 +55,7 @@ For some reason, gradients are not supported for borders. So I must come up with
 ### Body 
 - I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
 - Text-align is centred
-- The background consists of 5 different colors which combined creates a hue. 
+- The background consists of 5 different colors which combined creates a hue that scrolls across the background back and forth with a preset width of 500% for smooth scrolling. 
 
 
 ## JavaScript - coreTaskList
@@ -92,6 +92,7 @@ It is structured like this:
 #### saveTask: Refactored, now allows adding new data
 By adding another variable to saveTask, you can call saveTask to edit or add data points. Let's say you check an item off from your task list. Wouldn't you want to update in localStorage? 
 By calling storageHandler.saveTask(...ID, ...key:value pair), you'll be able to add new points to the entry.
+This is called a **spread operator**
 
 
 ### loadAllTask

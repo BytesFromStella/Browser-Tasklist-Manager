@@ -10,7 +10,8 @@ const descriptionText = document.getElementById("taskDescriptionField"); // Desc
 const deleteButton = document.getElementById("taskDelete"); 
 const deleteAllButton = document.getElementById("deleteAllButton");
 
-function createTaskElement(taskID, title, description, completed) {
+
+function createTaskElement(taskID, title, description, completed, deadline, priority) {
     console.log("Creating new DOM object");
 
     // Creating each HTML object to append to the HTML document
@@ -65,8 +66,9 @@ function handleClick(event) {
     const title = submitText.value || "Task Title";
     const description = descriptionText.value || "";  // Default to an empty description
     const completed = false;
+    const deadline = false;
 
-    const newTask = createTaskElement(taskID, title, description, completed);
+    const newTask = createTaskElement(taskID, title, description, completed, deadline);
     document.getElementById("taskList").appendChild(newTask);
 
     // Clear both input fields for additional entries

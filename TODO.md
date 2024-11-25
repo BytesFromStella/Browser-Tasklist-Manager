@@ -12,7 +12,8 @@ COMPLETED 04.11.2024
 ~~Simply display some red text on the page encouraging the user to renable the feature and why they should do that. Functionality will be saved in localStorageHandler since it's relevant to the built-in localStorage in JS.~~
 COMPLETED 10.11.2024
 
-## Color marking with gradients
+## Color marking of deadlines (using gradients)
+**Current**
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
 Currently editing or creating | No time limit.
@@ -22,6 +23,10 @@ Time limited item.
 Completed item.
 ### Red/?
 Item past expiration date/time.
+### Add a date for completion or a custom time limit / timer. 
+**Current**
+This time should use "in x amount of days/hours/minutes".
+Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.
 
 ## Add a menu
 Either to each element or on the right side when you select an element
@@ -43,10 +48,6 @@ which is where I would write more about it
 
 ## Task editing
 Allow existing tasks to be edited by either hitting an "edit" button or double-clicking it
-
-## Add a date for completion or a custom time limit / timer. 
-This time should use "in x amount of days/hours/minutes".
-Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.
 
 ## Reorganize tasks
 Allow tasks to be moved around based on importance/priority by the user.

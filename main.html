@@ -14,15 +14,29 @@
         New tasks will NOT save. You might have duplicate IDs and some features might break.
         Check out this link on how to re-enable it: https://allaboutcookies.org/how-to-manage-cookies
     </div>
-    <!-- Title Input Field -->
-    <input type="text" placeholder="Task Title"  id="taskField" required>
-    
-    <!-- Description Input Field -->
-    <textarea placeholder="Task Description" id="taskDescriptionField" required rows="3"></textarea>
-    
-    <button type="submit" id="submitButton">Add</button>
-    <button type="submit" id="removeAllButton" onclick="storageHandler.deleteAll()">Remove ALL</button>
-    
+    <div id="inputarea">
+        <!-- Title Input Field -->
+        <p>Title<br>
+        <input type="text" placeholder="Task Title"  id="taskField" required>
+        </p>
+
+        <!-- Deadline date+time -->
+        <p>
+        Deadline<br>
+        <input type="date" id="deadlineDateField"> <br>
+        <input type="time" id="deadlineTimeField"> 
+        </p>
+
+        <p>
+        <!-- Description Input Field -->
+        Description<br>
+        <textarea placeholder="Task Description" id="taskDescriptionField" required rows="3"></textarea>
+        </p>
+
+
+        <button type="submit" id="submitButton">Add</button> | 
+        <button type="submit" id="removeAllButton" onclick="storageHandler.deleteAll()">Remove ALL</button>
+   </div>
     <!-- Task List-->
     <ul id="taskList">
         <!-- Example gridbox-->
@@ -35,4 +49,5 @@
 
 <script src="coreTaskList.js"></script>
 <script src="localStorageHandler.js"></script>
-</html> 
+<!-- **REMOVE COMMENT WHEN COMPLETED**<script src="timerDates.js"></script> --> 
+</html>
