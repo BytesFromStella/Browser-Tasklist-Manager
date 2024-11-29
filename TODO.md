@@ -16,9 +16,13 @@ COMPLETED 10.11.2024
 **Current**
 Change the gradient around the list item box depending on the state of the item:
 ### Grey/white
-Currently editing or creating | No time limit.
+Currently editing | No time limit. (default value)
 ### Yellow/?
 Time limited item.
+### Blue/?
+Less than 1 day remaining.
+### Orange/?
+Less than 1 hour remaining.
 ### Green/?
 Completed item.
 ### Red/?
