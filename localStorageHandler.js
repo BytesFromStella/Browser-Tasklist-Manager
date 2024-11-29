@@ -39,7 +39,6 @@ const storageHandler = {
         for (let count = 0; count < localStorage.length; count++) { // Iterates over all the data from the total length of the localStorage list
             var key = localStorage.key(count);
             const taskData = JSON.parse(localStorage.getItem(key));
-
             const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed);
             insertToTarget.appendChild(taskElement);
         } 
