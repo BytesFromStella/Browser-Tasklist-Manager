@@ -36,7 +36,7 @@ main {
     box-shadow: 0 0 2em .35em #000000;
 }
 
-#submitButton, #removeAllButton {
+#submitButton, #removeAllButton, #taskDelete {
     outline: #1cff82c4;
     outline-width: medium;
     cursor: pointer;
@@ -60,6 +60,10 @@ main {
     background-color:#ff1c1cc4;
     box-shadow: 0 0 2em .35em #000000;
 
+}
+
+#taskPoint {
+    width: 100%;
 }
 
 #taskField {
@@ -122,6 +126,7 @@ li {
     gap: 10px;
     margin: 6px;
     padding: 12px;
+    width: auto;
 
     border-image-source: linear-gradient(30deg, #8f8f8f, #cecece);
     border-style: solid;
