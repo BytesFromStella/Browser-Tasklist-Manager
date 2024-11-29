@@ -63,6 +63,16 @@ This script coreTaskList (CTL) originally had all the handlers and code inside h
 
 The code defines all the HTML-IDs like the checkbox, label and button at the start as a constant. We don't want to modify the types before they are used in a new entry.
 
+As long as we grab the ID of an object, we can pass new key-value pairs to the JSON-stored object.
+
+The deadline consists of two parameters:
+- Date
+- Time
+Together, they're joined with a "T" in the middle to create an ISO 8601 JSON string date object. JS has native support for this and can be passed to a database as a universal time standard.
+
+## deadlineTimer.js
+The rest of the logic based around timers and deadlines is processed in ``deadlineTimer.js``.
+Here we will create a function that updates all the timers every second to hide any desync. (No need to update more than every 1000 ms).
 
 ## JavaScript - localStorageHandler
 Every function has a condition check called storageTest. It will attempt to write and remove an entry to localStorage. The condition check used in each function uses the following template:
@@ -106,12 +116,12 @@ This function will generate a unique ID every time a DOM object is created and s
 That means no task can have the ID value 0. They always start from 1. This will have no impact on further code and features and is merely an aestethic decision.
 
 ## deleteTask
-This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the key-value pair with that ID in localStorage.
+This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the HTML object and the key-value pair with the coresponding JSON-object in localStorage.
 
 ## deleteAll
-The event listener is located directly in the HTML element. This functions does 3 simple things:
+The event listener is located directly in the HTML element (in-line event listener). This functions does 3 simple things:
 1 - Does an alert with a confirm-prompt
-2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared.
+2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared. Otherwise the operation is aborted.
 3 - If true/confirmed: executes the built-in command ``localStorage.clear()``
 
 ## Additional Features
