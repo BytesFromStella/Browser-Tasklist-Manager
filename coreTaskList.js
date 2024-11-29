@@ -2,7 +2,6 @@
 
 // Defining static variables that contain the values submitted, that we want to interact with //
 var taskID = 0; // Initializing the ID counter 
-
 const completeStatus = document.getElementById("taskComplete")
 const addTask = document.getElementById("submitButton");
 const submitText = document.getElementById("taskField");   // Title
@@ -10,6 +9,31 @@ const descriptionText = document.getElementById("taskDescriptionField"); // Desc
 const deleteButton = document.getElementById("taskDelete"); 
 const deleteAllButton = document.getElementById("deleteAllButton");
 
+const deadlineDatePointer = document.getElementById("deadlineDateField");
+const deadlineTimePointer = document.getElementById("deadlineTimeField");
+const deadlineDate = deadlineDatePointer.value || "1970-01.01"
+const deadlineTime = deadlineDatePointer.value | "00:00:00"
+var deadline = (deadlineDate+"T"+deadlineTime+"Z") || null; // Extract the time and date with .value. Adding T for ISO8601 string standard
+
+function checkboxStyling(title, description, completed) {
+    storageHandler.saveTask(taskID, {completed: completed.checked});
+        if(completed.checked == true) {
+            title.style.textDecoration = "line-through";
+            title.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
+            title.style.outline = "12px";
+            description.style.textDecoration = "line-through";
+            description.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
+            description.style.outline = "12px";
+        }
+        else {
+            title.style.textDecoration = "0";
+            title.style.textShadow = "0";
+            title.style.outline = "0";
+            description.style.textDecoration = "0";
+            description.style.textShadow = "0";
+            description.style.outline = "0";
+        }
+}
 
 function createTaskElement(taskID, title, description, completed, deadline, priority) {
     console.log("Creating new DOM object");
@@ -26,22 +50,28 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     // Description
     const descriptionField = document.createElement("p");
     descriptionField.textContent = description;
+
+    // Deadline time and date
+    const deadlineField = document.createElement("div")
+    deadlineField.type = "div"
+    deadlineField.id = "deadlineField"
+    deadlineField.textContent = new Date(deadline);    
  
-    // Defining the delete button. It doesn't need to be appended to localStorage
+    // Delete button
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.id = "taskDelete";
     deleteButton.textContent = "Delete"; 
     
-    // We reference the constant and define the type it's supposed to be
+    // Checkbox
     const newCheckbox = document.createElement("input");
     newCheckbox.type = "checkbox";
     newCheckbox.checked = completed; // To easily extract the boolean for later use
+    function checkboxEvent() {checkboxStyling(titleField, descriptionField, newCheckbox)};
+    checkboxEvent();
 
     // Adding an event listener so the state of the checkbox is saved
-    newCheckbox.addEventListener("change", function() {
-        storageHandler.saveTask(taskID, {completed: newCheckbox.checked});
-    })
+    newCheckbox.addEventListener("change", checkboxStyling);
 
     newTask.appendChild(titleField);
     newTask.appendChild(descriptionField);
@@ -66,7 +96,7 @@ function handleClick(event) {
     const title = submitText.value || "Task Title";
     const description = descriptionText.value || "";  // Default to an empty description
     const completed = false;
-    const deadline = false;
+    const deadlineDT = createTaskElement.deadline;
 
     const newTask = createTaskElement(taskID, title, description, completed, deadline);
     document.getElementById("taskList").appendChild(newTask);
@@ -80,7 +110,9 @@ function handleClick(event) {
         id: taskID,
         title: title,
         description: description,
-        completed: completed
+        completed: completed,
+        deadline: deadlineDT
+        /* Additional data points from e.g localStorageHandler can pass new key:value pairs into the localStorage JSON */
     })
 }
 
@@ -99,3 +131,5 @@ submitText.addEventListener("keydown", function(event) {
         event.preventDefault(); // Prevents the browser from treating this as a web submission form
     }
 });
+
+
