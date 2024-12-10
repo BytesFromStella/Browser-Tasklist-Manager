@@ -12,7 +12,7 @@ const deleteAllButton = document.getElementById("deleteAllButton");
 const deadlineDatePointer = document.getElementById("deadlineDateField");
 const deadlineTimePointer = document.getElementById("deadlineTimeField");
 const deadlineDate = deadlineDatePointer.value || "1970-01.01"
-const deadlineTime = deadlineDatePointer.value | "00:00:00"
+const deadlineTime = deadlineDatePointer.value || "00:00:00"
 var deadline = (deadlineDate+"T"+deadlineTime+"Z") || null; // Extract the time and date with .value. Adding T for ISO8601 string standard
 
 function checkboxStyling(title, description, completed) {
@@ -71,7 +71,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     checkboxEvent();
 
     // Adding an event listener so the state of the checkbox is saved
-    newCheckbox.addEventListener("change", checkboxStyling);
+    newCheckbox.addEventListener("change", checkboxEvent);
 
     newTask.appendChild(titleField);
     newTask.appendChild(descriptionField);
@@ -86,7 +86,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     })
 
 
-    return newTask;
+    return newTask; 
 }
 
 function handleClick(event) {
