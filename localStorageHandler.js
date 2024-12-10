@@ -88,3 +88,4 @@ window.onload = function() {
     // Loading handler will go here 
     storageHandler.loadAllTasks();
 }
+
