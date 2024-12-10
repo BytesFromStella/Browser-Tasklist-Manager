@@ -124,6 +124,57 @@ The event listener is located directly in the HTML element (in-line event listen
 2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared. Otherwise the operation is aborted.
 3 - If true/confirmed: executes the built-in command ``localStorage.clear()``
 
+
+## MVC-concept 
+I will explain how an MVC-style coding would apply to a project like this, and how it would be executed.
+The MVC-concept does not apply very well to this application considering the scale, BUT it could still be applied if the code were to be refactored for the purposes of commercial use, long-term scaling or mass development of features. This would modularize the code, make it easily accessible for newcomers/contributors and give developers the ability to add new features without borking it because you changed the controller. 
+
+### Model
+__The model is the backend of your application. Everything regarding data flow and logic is run in the model file.__
+
+This concept would be responsible for manipulating and organizing data stored. Like the ``localStorageHandler.js`` file. It's main purpose is to store, retrieve and modify data passed by the user into the task list application, as well as running a test function to see if this is possible at all. When the API for random image boxes is implemeneted, it would also go into the model.
+
+The model enforces data rules, such as ensuring valid data types. For instance, if a string is passed into an integer-based function, the model can throw an error or return feedback for debugging.
+
+State management would also be important. Handling ``localStorage`` data would be a good example. If the user was modifying an object (task list item) it would keep the new information and immediately save it. Something like being able to resume editing a new item to add to your task list would be something the model is good at.
+**Example code:**
+```javascript
+const storageHandler = {
+    storageTest: function() { // Simply test if storing works to prevent other errors
+        try {
+            const test = '__localStorage_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        }   catch (e) {
+            document.getElementById("storageUnavailable").style.display = "block"; // Makes the error message visible
+            return false;   
+        }
+    },
+```
+The ``try`` block would be cut up and put into the model, while the catch block would go into the view file since it's responsible for everything regarding UI.
+
+### View
+__The view is responsible for displaying and rendering data and elements.__
+In the code block above this section, the ``catch(e)`` block would be defined within the view. This could be done with a state tracker using a true/false value OR an integer depending on what you wanna use it for. When the catch block runs it would adjust this state to false and make the UI element display. 
+
+In this project it would be things like the list item generation function ``createTaskElement()``. All rendering of HTML element goes into the view. Another good example would be the function ``checkboxStyling()`` that has the purpose of updating the strikethrough styling on list objects. Like when they are loaded into the application from ``localStorage``, the function checks if the object is completed or not.
+Alot of state trackers would go into the View as well.
+
+Any logic functionality should be avoided in the view files. It's only purpose is to display, hide, transform or modify data for the UI-elements.
+
+### Controller
+__Any communication between the view and the model would go in the controller.__
+This means it would process things like login information, calling functions to display the pages and so on. It's the "ham in the sandwich" for your application. It also delegates tasks to the view and model. The view would cause the trigger, the controller executes the required code/functions, then operates the task given.
+
+The controller can serve simple operations by itself. Like compact logic on gathering information and user input, then sending it to the correct block. In the Task List Application it would do things like error handling, applying event listeners for the buttons and processing user input.
+
+
+
+### Server/Services
+Contains all the routing information like IPs and API-paths, as well as using RESTful coding principles.
+
+
 ## Additional Features
 Will be written down here
 
