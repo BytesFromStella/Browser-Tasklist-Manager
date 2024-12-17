@@ -31,6 +31,10 @@ It also contains a hidden error message if the user doesn't allow cookies or hav
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
 Better styling work and documentation will be added at a later point 
 
+### Scoping (CSS)
+The formatting and scoping logic used in the styling sheet is pretty standard.
+Pointer declaration, followed by same-line opening curly-bracket. Afterwards, a line shift with all the values using an indent.
+
 ### Object structuring
 Every list item is currently display in a gridbox. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
 The objects currently are allowed to have different heights, but this will change in the future. They are still aligned correctly.
@@ -57,6 +61,38 @@ For some reason, gradients are not supported for borders. So I must come up with
 - Text-align is centred
 - The background consists of 5 different colors which combined creates a hue that scrolls across the background back and forth with a preset width of 500% for smooth scrolling. 
 
+## Promises
+Promises are objects that represent values of an operation that might be successful or unsuccessful. This is useful for running code that gets data which will be displayed later, while also allowing other parts of the code to keep running. The end result could be a HTTP status code (500, 404, 400 and so on...), potentially a 1 or 0.
+
+Promises are very powerful when used to read files, retrieve data from an API or write new data. Any operation that might take a while (1-30+ seconds) is worthy of this.
+There's three statements for a promise block:
+- Pending: Operation hasn't finished yet
+- Fulfilled: Operation was successful
+- Rejected: Operation failed and a catch, reason or error is given.
+### Promise syntax
+The syntax for constructing a promise operation is like this:
+```javascript
+const loadTasks = new Promise(resolve, reject) => {
+     if (success) {
+    resolve('The operation was successful!');
+  } else {
+    reject('There was an error.');
+  }
+}
+```
+To call the constructed promise (the statement defined above), you simply use
+```javascript
+loadTask
+.then(value => { return 1})
+.catch(error => { console.error("promise failed") })
+```
+### Promise catch/then/finally
+If you do not specify a catch block, the program will hang if the operation fails. Therefore it's critical to remember this logic.
+``.then()`` blocks are code that is executed sequentially. If any of the statements fail, it'll hop right to the catch block.
+``.finally()`` blocks are *always* executed. They are used in cleanup tasks or status reporting.    
+
+## Javascript - Indentation and spacing logic
+The indentation logic used in the different scripts are quite straightforward. I space each type of variable, declaration or object with a single lineshift, then followed by a double lineshift to make the code more readable. The indentation scope stays the same throughout the scripts with very few exceptions.
 
 ## JavaScript - coreTaskList
 This script coreTaskList (CTL) originally had all the handlers and code inside handleClick. This was later refactored and modularized to be more reusable in other areas like localStorageHandler (LSH). The key-value pairs are generated here and it calls the function from the LSH-script.
@@ -70,7 +106,7 @@ The deadline consists of two parameters:
 - Time
 Together, they're joined with a "T" in the middle to create an ISO 8601 JSON string date object. JS has native support for this and can be passed to a database as a universal time standard.
 
-## deadlineTimer.js
+## Javascript - deadlineTimer.js
 The rest of the logic based around timers and deadlines is processed in ``deadlineTimer.js``.
 Here we will create a function that updates all the timers every second to hide any desync. (No need to update more than every 1000 ms).
 
@@ -169,8 +205,6 @@ This means it would process things like login information, calling functions to 
 
 The controller can serve simple operations by itself. Like compact logic on gathering information and user input, then sending it to the correct block. In the Task List Application it would do things like error handling, applying event listeners for the buttons and processing user input.
 
-
-
 ### Server/Services
 Contains all the routing information like IPs and API-paths, as well as using RESTful coding principles.
 
@@ -178,3 +212,4 @@ Contains all the routing information like IPs and API-paths, as well as using RE
 ## Additional Features
 Will be written down here
 
+    

@@ -24,7 +24,7 @@ const storageHandler = {
         
         localStorage.setItem(taskID, JSON.stringify(newTaskData)) // Saving it as a JSON will make it alot easier to get the key-value pairs
         console.log("Task successfully saved to localStorage");
-    }, // In JS we add a comma to seperate 2 or more functions within an object literal (key-value pairs), except the last one
+    }, // In JS we add a comma to seperate 2 or more functions within an object literal or method list, except the last one
 
     loadAllTasks: function() {
         if (!this.storageTest()) { 

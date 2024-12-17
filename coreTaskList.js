@@ -11,52 +11,53 @@ const deleteAllButton = document.getElementById("deleteAllButton");
 
 const deadlineDatePointer = document.getElementById("deadlineDateField");
 const deadlineTimePointer = document.getElementById("deadlineTimeField");
-const deadlineDate = deadlineDatePointer.value || "1970-01.01"
-const deadlineTime = deadlineDatePointer.value || "00:00:00"
-var deadline = (deadlineDate+"T"+deadlineTime+"Z") || null; // Extract the time and date with .value. Adding T for ISO8601 string standard
+
 
 function checkboxStyling(title, description, completed) {
     storageHandler.saveTask(taskID, {completed: completed.checked});
-        if(completed.checked == true) {
-            title.style.textDecoration = "line-through";
-            title.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
-            title.style.outline = "12px";
-            description.style.textDecoration = "line-through";
-            description.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
-            description.style.outline = "12px";
-        }
-        else {
-            title.style.textDecoration = "0";
-            title.style.textShadow = "0";
-            title.style.outline = "0";
-            description.style.textDecoration = "0";
-            description.style.textShadow = "0";
-            description.style.outline = "0";
-        }
+    if(completed.checked == true) {
+        title.style.textDecoration = "line-through";
+        title.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
+        title.style.outline = "12px";
+        description.style.textDecoration = "line-through";
+        description.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
+        description.style.outline = "12px";
+    }
+    else {
+        title.style.textDecoration = "0";
+        title.style.textShadow = "0";
+        title.style.outline = "0";
+        description.style.textDecoration = "0";
+        description.style.textShadow = "0";
+        description.style.outline = "0";
+    }
 }
 
 function createTaskElement(taskID, title, description, completed, deadline, priority) {
     console.log("Creating new DOM object");
-
+    
     // Creating each HTML object to append to the HTML document
     var newTask = document.createElement("li");
     newTask.id = taskID; // Creates a new attribute to the object. So it'll contain the HTML object AND the ID key-value pair
     
-    // the || symbol is an OR operator. If there isn't a value, it'll use "New task" to catch any empty entries //
+    // the || symbol is an OR operator. If there isn't a value, it'll use "New task" to catch any empty entries 
     const titleField = document.createElement("label");
     titleField.id = "taskPoint";
     titleField.textContent = title;
-
+    
     // Description
     const descriptionField = document.createElement("p");
     descriptionField.textContent = description;
-
+    
     // Deadline time and date
+    // This line uses a TERNARY conditional operator. It will assign the right side operation if anything on the left side is falsey .
     const deadlineField = document.createElement("div")
-    deadlineField.type = "div"
     deadlineField.id = "deadlineField"
-    deadlineField.textContent = new Date(deadline);    
- 
+    const dlOutput = new Date(deadline); // Deadline date output variable
+    deadlineField.textContent = dlOutput.getMonth()+"."+dlOutput.getDate()+" "+dlOutput.getHours()+":"+dlOutput.getMinutes();
+    
+    
+    
     // Delete button
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
@@ -74,6 +75,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     newCheckbox.addEventListener("change", checkboxEvent);
 
     newTask.appendChild(titleField);
+    newTask.appendChild(deadlineField);
     newTask.appendChild(descriptionField);
     newTask.appendChild(newCheckbox);
     newTask.appendChild(deleteButton);
@@ -97,8 +99,12 @@ function handleClick(event) {
     const description = descriptionText.value || "";  // Default to an empty description
     const completed = false;
     const deadlineDT = createTaskElement.deadline;
+    const deadlineDate = deadlineDatePointer.value || false;
+    const deadlineTime = deadlineTimePointer.value || false;
+    let deadline= (deadlineDate && deadlineTime) ? new Date(deadlineDate+"T"+deadlineTime+"Z") : new Date("1970-01-01T00:00:00Z"); // Extract the time and date with .value. Adding T and Z for ISO8601 string standard
 
-    const newTask = createTaskElement(taskID, title, description, completed, deadline);
+
+    const newTask = createTaskElement(taskID, title, description, completed, deadlineDT);
     document.getElementById("taskList").appendChild(newTask);
 
     // Clear both input fields for additional entries
