@@ -27,18 +27,18 @@ function parseDeadline(deadlineInput) {
     try {console.log("Date and time pointer values: "+deadlineDatePointer.value+deadlineTimePointer.value)} catch {console.log("Date and time pointer values: "+deadlineDatePointer+deadlineTimePointer)};
 
     // CHECKING for existing pre-parsed date object.
-    if (deadlineInput instanceof Date) {console.warn("Date object detected. Stopping parsing");return deadlineInput}
+    if (deadlineInput instanceof Date && deadlineInput == !false) {console.warn("Date object detected. Stopping parsing");return deadlineInput}
     console.log("If-statement passed, pre-existing date object not detected");
     console.log(deadlineDate.value, deadlineTime.value);
     // This line uses a TERNARY conditional operator. It will assign the right side operation if anything on the left side is falsey .
     let output = 
     // Extract the time and date with .value. Adding T for ISO8601 string standard. You can add Z at the end for UTC timezone.
-    (deadlineInput instanceof Date && !isNaN(deadlineInput.getTime())) ? deadlineInput :  // Adds pre-existing parsed data as-is and checks the type and value, instead of parsing it again. Only applies when loading tasks
+    (deadlineInput instanceof Date && !false && !isNaN(deadlineInput.getTime())) ? deadlineInput :  // Adds pre-existing parsed data as-is and checks the type and value, instead of parsing it again. Only applies when loading tasks
     (deadlineDate && deadlineTime) ? new Date(deadlineDate+"T"+deadlineTime) :
     (deadlineDate && !deadlineTime) ? new Date(deadlineDate+"T"+"23:59:59") :
     // If the date isn't provided, we need to zero-pad the date numbers. We only get a single digit returned for month and date (1:12:2024 as an example). Got chatGPT to write the syntax, but in theory it's a bunch of conditional operators using .length to check the digits.
     (!deadlineDate && deadlineTime) ? new Date(`${currentTimeDate.getFullYear()}-${String(currentTimeDate.getMonth() + 1).padStart(2, '0')}-${String(currentTimeDate.getDate()).padStart(2, '0')}T${deadlineTime}`) :
-    "1970-01-01T00:00:00.000Z"; // Default fallback value
+    false; // Default fallback value
     console.log(output);
     return output;
 }
@@ -76,27 +76,33 @@ function createTaskElement(taskID, title, description, completed, deadline, comp
     descriptionField.className = "description"
     newTask.appendChild(descriptionField);
     
-    // Deadline date and countdown field  
-    let deadlineParsed = parseDeadline(deadline);
-    console.log(deadlineParsed);
-    const deadlineField = document.createElement("div")
-    deadlineField.className = "deadline"<
-    newTask.appendChild(deadlineField);
+   // Deadline date and countdown field  
+   let deadlineParsed = parseDeadline(deadline);
+   console.log(deadlineParsed);
 
-    let deadlineDateandTime = document.createElement("p");
-    deadlineDateandTime.id = "deadlineDateandTime";
-    deadlineDateandTime.className = "deadlineDateandTime";
-    if (deadlineParsed != "1970-01-01T00:00:00.000Z") {
-        deadlineDateandTime.innerHTML = 
-            "Deadline: "+"<br>"+
-            String(deadlineParsed.getMonth()+1).padStart(2, "0")+"."+
-            String(deadlineParsed.getDate()).padStart(2, "0")+"."+
-            String(deadlineParsed.getFullYear()) + " | "+
-            String(deadlineParsed.getHours()).padStart(2, "0")+":"+
-            String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>"
-    }
-    newTask.appendChild(deadlineDateandTime);
+   // Ensure deadlineParsed is a Date object
 
+
+   const deadlineField = document.createElement("div");
+   deadlineField.className = "deadline";
+   newTask.appendChild(deadlineField);
+
+   let deadlineDateandTime = document.createElement("p");
+   deadlineDateandTime.id = "deadlineDateandTime";
+   deadlineDateandTime.className = "deadlineDateandTime";
+   if (deadlineParsed == false || deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+       // Handle the case where the deadline is not set or is the default date
+       deadlineDateandTime.innerHTML = "No deadline set";
+   } else {
+       deadlineDateandTime.innerHTML = 
+           "Deadline: "+"<br>"+
+           String(deadlineParsed.getMonth()+1).padStart(2, "0")+"."+
+           String(deadlineParsed.getDate()).padStart(2, "0")+"."+
+           String(deadlineParsed.getFullYear()) + " | "+
+           String(deadlineParsed.getHours()).padStart(2, "0")+":"+
+           String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>";
+   }
+   newTask.appendChild(deadlineDateandTime);
     // Checkbox
     const newCheckbox = document.createElement("input");
     newCheckbox.type = "checkbox";
@@ -213,7 +219,7 @@ function createTaskElement(taskID, title, description, completed, deadline, comp
     function checkboxEvent() {
         // Advanced condition check based on completion timing 
         currentTimeDate = new Date(); // Refresh the current time for the interval
-        if (!deadlineParsed || deadlineParsed === "1970-01-01T00:00:00.000Z") { 
+        if (deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300){
             completedState = 4;} // No deadline set
         else if (newCheckbox.checked == false 
             && deadlineParsed > currentTimeDate) 
