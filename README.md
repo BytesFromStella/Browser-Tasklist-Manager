@@ -13,6 +13,8 @@ Why use a chatGPT model for this? Researching all the individual parts manually 
 - Styling completed tasks and hovering effects on buttons like DELETE and ADD.
 - My cool and awesome new name and signature at the bottom of the page
 - Local saving and loading of task elements
+- **Color marking of deadlines**: Tasks are color-coded based on their deadlines using gradients.
+- **Clear ALL button**: Erases all tasks currently being displayed and stored in the local client.
 
 ### HTML code
 Barebones website code with all the essentials:
@@ -91,6 +93,8 @@ If you do not specify a catch block, the program will hang if the operation fail
 ``.then()`` blocks are code that is executed sequentially. If any of the statements fail, it'll hop right to the catch block.
 ``.finally()`` blocks are *always* executed. They are used in cleanup tasks or status reporting.    
 
+Null-Safe Access******
+
 ## Javascript - Indentation and spacing logic
 The indentation logic used in the different scripts are quite straightforward. I space each type of variable, declaration or object with a single lineshift, then followed by a double lineshift to make the code more readable. The indentation scope stays the same throughout the scripts with very few exceptions.
 
@@ -105,6 +109,8 @@ The deadline consists of two parameters:
 - Date
 - Time
 Together, they're joined with a "T" in the middle to create an ISO 8601 JSON string date object. JS has native support for this and can be passed to a database as a universal time standard.
+
+After dawdling with the deadline code logic for WAY too long, I decided to hardcode it into the ``createTaskElement`unction. I cannot grab the values
 
 ## Javascript - deadlineTimer.js
 The rest of the logic based around timers and deadlines is processed in ``deadlineTimer.js``.
@@ -212,4 +218,3 @@ Contains all the routing information like IPs and API-paths, as well as using RE
 ## Additional Features
 Will be written down here
 
-    
