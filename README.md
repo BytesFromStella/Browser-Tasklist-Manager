@@ -13,6 +13,8 @@ Why use a chatGPT model for this? Researching all the individual parts manually 
 - Styling completed tasks and hovering effects on buttons like DELETE and ADD.
 - My cool and awesome new name and signature at the bottom of the page
 - Local saving and loading of task elements
+- **Color marking of deadlines**: Tasks are color-coded based on their deadlines using gradients.
+- **Clear ALL button**: Erases all tasks currently being displayed and stored in the local client.
 
 ### HTML code
 Barebones website code with all the essentials:
@@ -30,6 +32,10 @@ It also contains a hidden error message if the user doesn't allow cookies or hav
 ## CSS / Styling sheet
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
 Better styling work and documentation will be added at a later point 
+
+### Scoping (CSS)
+The formatting and scoping logic used in the styling sheet is pretty standard.
+Pointer declaration, followed by same-line opening curly-bracket. Afterwards, a line shift with all the values using an indent.
 
 ### Object structuring
 Every list item is currently display in a gridbox. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
@@ -55,14 +61,60 @@ For some reason, gradients are not supported for borders. So I must come up with
 ### Body 
 - I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
 - Text-align is centred
-- The background consists of 5 different colors which combined creates a hue. 
+- The background consists of 5 different colors which combined creates a hue that scrolls across the background back and forth with a preset width of 500% for smooth scrolling. 
 
+## Promises
+Promises are objects that represent values of an operation that might be successful or unsuccessful. This is useful for running code that gets data which will be displayed later, while also allowing other parts of the code to keep running. The end result could be a HTTP status code (500, 404, 400 and so on...), potentially a 1 or 0.
+
+Promises are very powerful when used to read files, retrieve data from an API or write new data. Any operation that might take a while (1-30+ seconds) is worthy of this.
+There's three statements for a promise block:
+- Pending: Operation hasn't finished yet
+- Fulfilled: Operation was successful
+- Rejected: Operation failed and a catch, reason or error is given.
+### Promise syntax
+The syntax for constructing a promise operation is like this:
+```javascript
+const loadTasks = new Promise(resolve, reject) => {
+     if (success) {
+    resolve('The operation was successful!');
+  } else {
+    reject('There was an error.');
+  }
+}
+```
+To call the constructed promise (the statement defined above), you simply use
+```javascript
+loadTask
+.then(value => { return 1})
+.catch(error => { console.error("promise failed") })
+```
+### Promise catch/then/finally
+If you do not specify a catch block, the program will hang if the operation fails. Therefore it's critical to remember this logic.
+``.then()`` blocks are code that is executed sequentially. If any of the statements fail, it'll hop right to the catch block.
+``.finally()`` blocks are *always* executed. They are used in cleanup tasks or status reporting.    
+
+Null-Safe Access******
+
+## Javascript - Indentation and spacing logic
+The indentation logic used in the different scripts are quite straightforward. I space each type of variable, declaration or object with a single lineshift, then followed by a double lineshift to make the code more readable. The indentation scope stays the same throughout the scripts with very few exceptions.
 
 ## JavaScript - coreTaskList
 This script coreTaskList (CTL) originally had all the handlers and code inside handleClick. This was later refactored and modularized to be more reusable in other areas like localStorageHandler (LSH). The key-value pairs are generated here and it calls the function from the LSH-script.
 
 The code defines all the HTML-IDs like the checkbox, label and button at the start as a constant. We don't want to modify the types before they are used in a new entry.
 
+As long as we grab the ID of an object, we can pass new key-value pairs to the JSON-stored object.
+
+The deadline consists of two parameters:
+- Date
+- Time
+Together, they're joined with a "T" in the middle to create an ISO 8601 JSON string date object. JS has native support for this and can be passed to a database as a universal time standard.
+
+After dawdling with the deadline code logic for WAY too long, I decided to hardcode it into the ``createTaskElement`unction. I cannot grab the values
+
+## Javascript - deadlineTimer.js
+The rest of the logic based around timers and deadlines is processed in ``deadlineTimer.js``.
+Here we will create a function that updates all the timers every second to hide any desync. (No need to update more than every 1000 ms).
 
 ## JavaScript - localStorageHandler
 Every function has a condition check called storageTest. It will attempt to write and remove an entry to localStorage. The condition check used in each function uses the following template:
@@ -92,6 +144,7 @@ It is structured like this:
 #### saveTask: Refactored, now allows adding new data
 By adding another variable to saveTask, you can call saveTask to edit or add data points. Let's say you check an item off from your task list. Wouldn't you want to update in localStorage? 
 By calling storageHandler.saveTask(...ID, ...key:value pair), you'll be able to add new points to the entry.
+This is called a **spread operator**
 
 
 ### loadAllTask
@@ -105,13 +158,62 @@ This function will generate a unique ID every time a DOM object is created and s
 That means no task can have the ID value 0. They always start from 1. This will have no impact on further code and features and is merely an aestethic decision.
 
 ## deleteTask
-This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the key-value pair with that ID in localStorage.
+This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the HTML object and the key-value pair with the coresponding JSON-object in localStorage.
 
 ## deleteAll
-The event listener is located directly in the HTML element. This functions does 3 simple things:
+The event listener is located directly in the HTML element (in-line event listener). This functions does 3 simple things:
 1 - Does an alert with a confirm-prompt
-2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared.
+2 - If true/confirmed; get the HTML-element where all the elements are stored and clears it. Gives the user feedback that the list has been cleared. Otherwise the operation is aborted.
 3 - If true/confirmed: executes the built-in command ``localStorage.clear()``
+
+
+## MVC-concept 
+I will explain how an MVC-style coding would apply to a project like this, and how it would be executed.
+The MVC-concept does not apply very well to this application considering the scale, BUT it could still be applied if the code were to be refactored for the purposes of commercial use, long-term scaling or mass development of features. This would modularize the code, make it easily accessible for newcomers/contributors and give developers the ability to add new features without borking it because you changed the controller. 
+
+### Model
+__The model is the backend of your application. Everything regarding data flow and logic is run in the model file.__
+
+This concept would be responsible for manipulating and organizing data stored. Like the ``localStorageHandler.js`` file. It's main purpose is to store, retrieve and modify data passed by the user into the task list application, as well as running a test function to see if this is possible at all. When the API for random image boxes is implemeneted, it would also go into the model.
+
+The model enforces data rules, such as ensuring valid data types. For instance, if a string is passed into an integer-based function, the model can throw an error or return feedback for debugging.
+
+State management would also be important. Handling ``localStorage`` data would be a good example. If the user was modifying an object (task list item) it would keep the new information and immediately save it. Something like being able to resume editing a new item to add to your task list would be something the model is good at.
+**Example code:**
+```javascript
+const storageHandler = {
+    storageTest: function() { // Simply test if storing works to prevent other errors
+        try {
+            const test = '__localStorage_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        }   catch (e) {
+            document.getElementById("storageUnavailable").style.display = "block"; // Makes the error message visible
+            return false;   
+        }
+    },
+```
+The ``try`` block would be cut up and put into the model, while the catch block would go into the view file since it's responsible for everything regarding UI.
+
+### View
+__The view is responsible for displaying and rendering data and elements.__
+In the code block above this section, the ``catch(e)`` block would be defined within the view. This could be done with a state tracker using a true/false value OR an integer depending on what you wanna use it for. When the catch block runs it would adjust this state to false and make the UI element display. 
+
+In this project it would be things like the list item generation function ``createTaskElement()``. All rendering of HTML element goes into the view. Another good example would be the function ``checkboxStyling()`` that has the purpose of updating the strikethrough styling on list objects. Like when they are loaded into the application from ``localStorage``, the function checks if the object is completed or not.
+Alot of state trackers would go into the View as well.
+
+Any logic functionality should be avoided in the view files. It's only purpose is to display, hide, transform or modify data for the UI-elements.
+
+### Controller
+__Any communication between the view and the model would go in the controller.__
+This means it would process things like login information, calling functions to display the pages and so on. It's the "ham in the sandwich" for your application. It also delegates tasks to the view and model. The view would cause the trigger, the controller executes the required code/functions, then operates the task given.
+
+The controller can serve simple operations by itself. Like compact logic on gathering information and user input, then sending it to the correct block. In the Task List Application it would do things like error handling, applying event listeners for the buttons and processing user input.
+
+### Server/Services
+Contains all the routing information like IPs and API-paths, as well as using RESTful coding principles.
+
 
 ## Additional Features
 Will be written down here

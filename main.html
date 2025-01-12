@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html lang="en">
+<html lang="en-gb">
 <head>
     <meta charset="UTF-8">
     <title>Task List Manager - Webdev refresh project</title>
@@ -8,24 +8,51 @@
 <body>
 
 <header><h1>Task List Manager</h1></header>
-
+<nav>
+    <ul id="navbar">
+        <li>Fuck it, dark mode. Check this box to enable it: <br><input type="checkbox" id="darkmodeToggle"> </li>
+    </ul>
+</nav>
 <main>
     <div id="storageUnavailable"> <h1>ERROR! Local storage is not available. Did you disable cookies?</h1>
         New tasks will NOT save. You might have duplicate IDs and some features might break.
         Check out this link on how to re-enable it: https://allaboutcookies.org/how-to-manage-cookies
     </div>
-    <!-- Title Input Field -->
-    <input type="text" placeholder="Task Title"  id="taskField" required>
-    
-    <!-- Description Input Field -->
-    <textarea placeholder="Task Description" id="taskDescriptionField" required rows="3"></textarea>
-    
-    <button type="submit" id="submitButton">Add</button>
-    <button type="submit" id="removeAllButton" onclick="storageHandler.deleteAll()">Remove ALL</button>
-    
+    <div id="inputarea">
+        <!-- Title Input Field -->
+        <p>Title<br>
+        <input type="text" placeholder="Task Title"  id="taskField" required>
+        </p>
+        <p id="priorityArea">
+            Priority
+            <select id="priorityField">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select> 
+        </p>
+        <!-- Deadline date+time -->
+        <p id="deadlineArea">
+        Deadline (need both date and time)<br>
+        <input type="date" id="deadlineDateField"> <br>
+        <input type="time" id="deadlineTimeField"> 
+        </p>
+
+        <p>
+        <!-- Description Input Field -->
+        Description<br>
+        <textarea placeholder="Task Description" id="taskDescriptionField" required rows="3"></textarea>
+        </p>
+
+
+        <button type="submit" id="submitButton">Add</button> | 
+        <button type="submit" id="removeAllButton" onclick="storageHandler.deleteAll()">Remove ALL</button>
+   </div>
     <!-- Task List-->
     <ul id="taskList">
-        <!-- Example gridbox-->
+        <div class="taskItem">Example Task 1</div>
+        <div class="taskItem">Example Task 2</div>
+        <div class="taskItem">Example Task 3</div>
     </ul>
 
 </main>
@@ -35,4 +62,5 @@
 
 <script src="coreTaskList.js"></script>
 <script src="localStorageHandler.js"></script>
-</html> 
+<script src="deadlineTimer.js"></script> 
+</html>
