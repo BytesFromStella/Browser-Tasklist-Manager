@@ -12,31 +12,21 @@ COMPLETED 04.11.2024
 ~~Simply display some red text on the page encouraging the user to renable the feature and why they should do that. Functionality will be saved in localStorageHandler since it's relevant to the built-in localStorage in JS.~~
 COMPLETED 10.11.2024
 
-## Color marking of deadlines (using gradients)
-**Current**
-Change the gradient around the list item box depending on the state of the item:
-### Grey/white
-Currently editing | No time limit. (default value)
-### Yellow/?
-Time limited item.
-### Blue/?
-Less than 1 day remaining.
-### Orange/?
-Less than 1 hour remaining.
-### Green/?
-Completed item.
-### Red/?
-Item past expiration date/time.
-### Add a date for completion or a custom time limit / timer. 
-**Current**
-This time should use "in x amount of days/hours/minutes".
-Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.
+## ~~Color marking of deadlines (using gradients)~~
+~~Change the gradient around the list item box depending on the state of the item~~
+COMPLETED 12.01.25
+
+### ~~Add a date for completion or a custom time limit / timer. ~~
+COMPLETED 12.01.25
+~~This time should use "in x amount of days/hours/minutes".
+Should also allow you to change the "time remaining" to the set date and time by hovering your mouse over it.~~
 
 ## Add a menu
 Either to each element or on the right side when you select an element
 
-## Ensure readability of the website
-Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.
+## ~~Ensure readability of the website~~
+~~Assess whether all the text is readable and that the user is able to navigate around the site using only the keyboard or when using accessibility tools.~~
+COMPLETED 12.01.25 (I coincidentally solved this while working on the deadline logic. Everything is responsive now)
 
 ## ~~Clear ALL button~~
 ~~Erases all tasks currently being displayed and stored in the local client~~
