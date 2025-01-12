@@ -7,6 +7,7 @@ const storageHandler = {
             /*Object.freeze(localStorage); // Flip to resume/pause error condition. Test code for error handling */
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
+            if(taskID != 0) {throw new exception("Task ID is not a number, is 0, empty, false");} // Error handling for taskID;
             return true;
         }   catch (e) {
             document.getElementById("storageUnavailable").style.display = "block"; // Makes the error message visible
@@ -38,9 +39,15 @@ const storageHandler = {
         // Use a for-loop instead of a conditional While, since I'll be getting every item in localStorage anyways
         for (let count = 0; count < localStorage.length; count++) { // Iterates over all the data from the total length of the localStorage list
             var key = localStorage.key(count);
-            const taskData = JSON.parse(localStorage.getItem(key));
-            const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed);
-            insertToTarget.appendChild(taskElement);
+            if(key === "darkmode") {console.log("Darkmode key detected. Skipping..."); continue;} // The continue syntax skips the current iteration and moves to the next one
+            if(key!=0 || key!= false){
+                const taskData = JSON.parse(localStorage.getItem(key));
+                let deadline = new Date (taskData.deadline) || false; // Parsing to prevent unexpected behavior elsewhere and keep it consistently as a Date object.
+                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline);
+                insertToTarget.appendChild(taskElement);
+                console.log("Saving item to LocalStorage (see next line):")
+                console.log(taskElement);
+            }
         } 
         console.log("Tasks successfully loaded");
     },
