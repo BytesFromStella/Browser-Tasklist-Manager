@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html lang="en">
+<html lang="en-gb">
 <head>
     <meta charset="UTF-8">
     <title>Task List Manager - Webdev refresh project</title>
@@ -8,7 +8,11 @@
 <body>
 
 <header><h1>Task List Manager</h1></header>
-
+<nav>
+    <ul id="navbar">
+        <li>Fuck it, dark mode. Check this box to enable it: <br><input type="checkbox" id="darkmodeToggle"> </li>
+    </ul>
+</nav>
 <main>
     <div id="storageUnavailable"> <h1>ERROR! Local storage is not available. Did you disable cookies?</h1>
         New tasks will NOT save. You might have duplicate IDs and some features might break.
@@ -19,9 +23,16 @@
         <p>Title<br>
         <input type="text" placeholder="Task Title"  id="taskField" required>
         </p>
-
+        <p id="priorityArea">
+            Priority
+            <select id="priorityField">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select> 
+        </p>
         <!-- Deadline date+time -->
-        <p>
+        <p id="deadlineArea">
         Deadline (need both date and time)<br>
         <input type="date" id="deadlineDateField"> <br>
         <input type="time" id="deadlineTimeField"> 
@@ -39,7 +50,9 @@
    </div>
     <!-- Task List-->
     <ul id="taskList">
-        <!-- Example gridbox-->
+        <div class="taskItem">Example Task 1</div>
+        <div class="taskItem">Example Task 2</div>
+        <div class="taskItem">Example Task 3</div>
     </ul>
 
 </main>
@@ -49,5 +62,5 @@
 
 <script src="coreTaskList.js"></script>
 <script src="localStorageHandler.js"></script>
-<!-- **REMOVE COMMENT WHEN COMPLETED**<script src="timerDates.js"></script> --> 
+<script src="deadlineTimer.js"></script> 
 </html>
