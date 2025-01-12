@@ -1,4 +1,3 @@
-
 html {
     height: 100%;
     zoom: 125%; /* Global scaling for the webpage to be more readable */
@@ -13,6 +12,22 @@ body {
     animation: colorShift 8s linear infinite alternate;
     /* Linear makes the animation go from 0% to 100% at a constant speed */
 }
+.darkmode {
+    background: linear-gradient(90deg, #0d0d0d, #1a1a1a, #262626, #333333, #404040);
+    background-size: 1000% 1000%;
+    animation: colorShift 8s linear infinite alternate;
+    color: white;
+}
+
+.darkmode nav>li {
+    color: white;
+}
+
+.darkmode .taskDelete:hover, .darkmode .taskDelete:focus {
+    background-color: red;
+    outline-width: medium;
+    cursor: pointer;
+}
 
 @keyframes colorShift {
     0% {
@@ -22,7 +37,21 @@ body {
         background-position: 100% 50%;
     }
 }
-
+nav > ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    
+}
+nav>ul>li {
+    display: flex;
+    border: .20em solid var(--glow-color);
+    border-style: solid;
+    justify-content: center;
+    align-items: center;
+}
 main {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
@@ -36,7 +65,7 @@ main {
     box-shadow: 0 0 2em .35em #000000;
 }
 
-#submitButton, #removeAllButton, #taskDelete {
+#submitButton, #removeAllButton, .taskDelete {
     outline: #1cff82c4;
     outline-width: medium;
     cursor: pointer;
@@ -50,19 +79,19 @@ main {
 }
 
 /* Hovering over the submit button makes your cursor point and makes the button green */
-#submitButton:hover {
+#submitButton:hover, #submitButton:focus {
     background-color:#1cff82c4;
     box-shadow: 0 0 2em .35em #000000;
 
 }
 
-#removeAllButton:hover {
+#removeAllButton:hover, #removeAllButton:focus {
     background-color:#ff1c1cc4;
     box-shadow: 0 0 2em .35em #000000;
 
 }
 
-#taskPoint {
+.taskPoint {
     width: 100%;
 }
 
@@ -81,19 +110,38 @@ main {
     resize: none; /* Disables resizing */
 }
 
-#taskDelete {
+.priorityBox {
+    size: 10px;
+    background: blue;
+}
+
+.priority-high {
+    background-color: red;
+}
+
+.priority-medium {
+    background-color: orange;
+}
+
+.priority-low {
+    background-color: green;
+}
+
+.taskDelete {
     justify-content: right;
 }
 
-#taskDelete:hover {
+.taskDelete:hover, .taskDelete:focus {
     background-color: red;
     outline-width: medium;
     cursor: pointer;
 }
 
-#taskComplete {
+.taskComplete {
     size: 3rem;
 }
+
+
 
  /* This checks for any ID that contains a label and a checkbox in a True state */
 input[type="checkbox"]:checked + label {
@@ -106,7 +154,7 @@ input[type="checkbox"]:checked + label {
     outline: 12px;
 }
 
-ul {
+#taskList {
     display: grid;
     /* Use REPEAT(3, minmax) to limit the amount of items that are display per row with a minimum spacing */
     grid-template-columns: repeat(3, minmax(200px, 1fr));
@@ -119,7 +167,7 @@ ul {
     padding-left: 0;
 }
 
-li {
+.item {
     display: grid;
     align-items: center;
     justify-content: center;
