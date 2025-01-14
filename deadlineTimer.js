@@ -37,70 +37,69 @@ const deadlineHandler = {
         let deadlineDate = new Date(deadline);
         let defaultDeadline = new Date("1970-01-01T00:00:00");
 
-        if(checkbox.checked == true) {
-            if (completedState === 2) {
-                this.taskBorderStyle(target, "linear-gradient(30deg, #32CD32, #7FFF00)", "dotted");
-                console.log("Task completed before deadline. Applying limegreen-chartreuse with dotted border");
-            } else if (completedState === 3) {
-                this.taskBorderStyle(target, "linear-gradient(30deg, #32CD32, #228B22)", "dashed");
-                console.log("Task completed after deadline. Applying limegreen-forestgreen with dashed border");
-            }
+        if (checkbox.checked == true || completedState) {
+            this.taskBorderStyle(target, "linear-gradient(30deg, #32CD32, #00FF00)", "solid");
+            console.log("Task completed. Applying green gradient");
+            return;
+        } else if (this.differenceInDays(deadlineDate, currentTimeDate) <= -300) {
+            this.taskBorderStyle(target, "linear-gradient(30deg, #D3D3D3, #A9A9A9)", "solid");
+            console.log("Deadline expired by more than 300 days. Applying gray gradient");
             return;
         } else if(deadlineDate < currentTimeDate) {
             this.taskBorderStyle(target, "linear-gradient(30deg, #FF0000, #8B0000)", "solid");
             console.log("Task expired. Applying red-darkred");
             return;
         } else if (this.differenceInMinutes(deadlineDate, currentTimeDate) < 30) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FF0000, #8B0000)", "solid");
-            console.log("Less than 30 minutes left. Applying red-darkred");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #8A2BE2, #4B0082)", "solid");
+            console.log("Less than 30 minutes left. Applying purple-indigo");
             return;
         } else if (this.differenceInHours(deadlineDate, currentTimeDate) < 1) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FF4500, #FF0000)", "solid");
-            console.log("Less than 1 hour left. Applying orangered-red");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #9370DB, #8A2BE2)", "solid");
+            console.log("Less than 1 hour left. Applying medium purple-purple");
             return;
         } else if (this.differenceInHours(deadlineDate, currentTimeDate) < 3) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FF6347, #FF4500)", "solid");
-            console.log("Less than 3 hours left. Applying tomato-orangered");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #7B68EE, #9370DB)", "solid");
+            console.log("Less than 3 hours left. Applying medium slate blue-medium purple");
             return;
         } else if (this.differenceInHours(deadlineDate, currentTimeDate) < 6) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FF7F50, #FF6347)", "solid");
-            console.log("Less than 6 hours left. Applying coral-tomato");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #6A5ACD, #7B68EE)", "solid");
+            console.log("Less than 6 hours left. Applying slate blue-medium slate blue");
             return;
         } else if (this.differenceInHours(deadlineDate, currentTimeDate) < 12) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FFA07A, #FF7F50)", "solid");
-            console.log("Less than 12 hours left. Applying lightsalmon-coral");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #483D8B, #6A5ACD)", "solid");
+            console.log("Less than 12 hours left. Applying dark slate blue-slate blue");
             return;
         } else if (this.differenceInHours(deadlineDate, currentTimeDate) < 24) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FF8C00, #FF4500)", "solid");
-            console.log("Less than 1 day left. Applying darkorange-orangered");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #4169E1, #483D8B)", "solid");
+            console.log("Less than 1 day left. Applying royal blue-dark slate blue");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 2) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FFD700, #FF8C00)", "solid");
-            console.log("Less than 2 days left. Applying gold-darkorange");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #1E90FF, #4169E1)", "solid");
+            console.log("Less than 2 days left. Applying dodger blue-royal blue");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 3) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #FFFF00, #FFD700)", "solid");
-            console.log("Less than 3 days left. Applying yellow-gold");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #00BFFF, #1E90FF)", "solid");
+            console.log("Less than 3 days left. Applying deep sky blue-dodger blue");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 5) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #ADFF2F, #FFFF00)", "solid");
-            console.log("Less than 5 days left. Applying greenyellow-yellow");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #00CED1, #00BFFF)", "solid");
+            console.log("Less than 5 days left. Applying dark turquoise-deep sky blue");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 7) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #32CD32, #ADFF2F)", "solid");
-            console.log("Less than 7 days left. Applying limegreen-greenyellow");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #20B2AA, #00CED1)", "solid");
+            console.log("Less than 7 days left. Applying light sea green-dark turquoise");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 14) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #7FFF00, #32CD32)", "solid");
-            console.log("Less than 14 days left. Applying chartreuse-limegreen");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #40E0D0, #20B2AA)", "solid");
+            console.log("Less than 14 days left. Applying turquoise-light sea green");
             return;
         } else if (this.differenceInDays(deadlineDate, currentTimeDate) < 30) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #00FF00, #7FFF00)", "solid");
-            console.log("Less than 30 days left. Applying green-chartreuse");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #48D1CC, #40E0D0)", "solid");
+            console.log("Less than 30 days left. Applying medium turquoise-turquoise");
             return;
         } else if(deadlineDate > defaultDeadline) {
-            this.taskBorderStyle(target, "linear-gradient(30deg, #32CD32, #00FF00)", "solid");
-            console.log("More than 30 days left. Applying limegreen-green");
+            this.taskBorderStyle(target, "linear-gradient(30deg, #00FFFF, #48D1CC)", "solid");
+            console.log("More than 30 days left. Applying cyan-medium turquoise");
             return;
         } else {
             this.taskBorderStyle(target, "linear-gradient(30deg, #D3D3D3, #A9A9A9)", "solid");
