@@ -44,7 +44,7 @@ function parseDeadline(deadlineInput) {
 }
 
 
-function createTaskElement(taskID, title, description, completed, deadline, completedState, priority) {
+function createTaskElement(taskID, title, description, completed, deadline, priority, completionDate) {
     console.log("Creating new DOM object");
     
     // Creating each HTML object to append to the HTML document
@@ -58,17 +58,19 @@ function createTaskElement(taskID, title, description, completed, deadline, comp
     titleField.textContent = title;
     newTask.appendChild(titleField);
 
-    // Priority
+    // Priority Field
     const priorityField = document.createElement("div");
-    const priorityBox = document.createElement("div");
-    priorityBox.className = "priorityBox";
-    priorityField.textContent = priority;
-    priorityField.className = "priority";
-
-    priorityField.appendChild(priorityBox); 
-    priorityBox.style.backgroundColor = priority;
-
+    priorityField.textContent = priority+" priority";
+    priorityField.className = "priorityField";
     newTask.appendChild(priorityField);
+
+    // Priority color box
+    const priorityBox = document.createElement("div");
+    priorityBox.className = "priorityBox-" + priority || "priorityBox-"
+    titleField.innerHTML += "<br>";
+    newTask.appendChild(priorityBox);
+    // priorityBox.style.backgroundColor = priority;
+    
     
     // Description
     const descriptionField = document.createElement("p");
@@ -163,81 +165,104 @@ function createTaskElement(taskID, title, description, completed, deadline, comp
     function checkboxStylingComplete(taskID, HTMLElement, completed) {
         storageHandler.saveTask(taskID, {completed: completed.checked});
         HTMLElement.style.textDecoration = "line-through";
-        newTask.querySelector(".taskDelete").style.textDecoration = "none"; // This is a bug that causes the delete button to be crossed out as well
         HTMLElement.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white";
-        HTMLElement.style.outline = "12px"
+        HTMLElement.style.outline = "12px";
     }
+
     function checkboxStylingUncomplete(taskID, HTMLElement, completed) {
         storageHandler.saveTask(taskID, {completed: completed.checked});
-        HTMLElement.style.textDecoration = "0";
-        HTMLElement.style.textShadow = "0";
-        HTMLElement.style.outline = "0";
+        HTMLElement.style.textDecoration = "none";
+        HTMLElement.style.textShadow = "none";
+        HTMLElement.style.outline = "none";
+        HTMLElement.style.fontWeight = "normal";
     }
-    
+
+
     function completedStateCheck(completedState, completed, taskID, deadlineParsed) {
+        let deadlineHTMLPointer = deadlineField;
+        let titleHTMLpointer = titleField
         switch (completedState) {
             case 0: // Not completed, before deadline
-                checkboxStylingUncomplete(taskID, newTask, completed);
+                checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
+                checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
+                
+
+                
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed); // This will instantly refresh the border style to the uncompleted style
                 startCountdown(deadlineParsed, deadlineField);
                 storageHandler.saveTask(taskID, {completionDate: false});
                 console.log("Task not completed. Applying intervals");
-                break;
+                return completedState = 0;
             case 1: // Not completed, after deadline
-                checkboxStylingUncomplete(taskID, newTask, completed);
+                checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
+                checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed); // This will instantly refresh the border style to the completed style          
                 storageHandler.saveTask(taskID, {completionDate: false});
                 startCountdown(deadlineParsed, deadlineField);
-                console.log("Task completed. Interval not applied!");
-                break;
+                console.log("Task completed. Interval not applied");
+                return completedState = 1;
             case 2: // Completed before deadline
-                checkboxStylingComplete(taskID, newTask, completed, completedState);
+                checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
+                checkboxStylingComplete(taskID, titleHTMLpointer, completed, completedState);
+                deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
                 stopCountdown(newTask); 
-                break;
+                return completedState = 2;
             case 3: // Completed after deadline
-                checkboxStylingComplete(taskID, newTask, completed, completedState);
+                checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
+                checkboxStylingComplete(taskID, titleHTMLpointer, completed, completedState);
+                deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
                 stopCountdown(newTask); 
-                break;
-            case 4: // No deadline set
-                checkboxStylingUncomplete(taskID, newTask, completed, completedState);
-                break;
-            case 5:
-                checkboxStylingComplete(taskID, newTask, completed, completedState);
-                storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
-                break;
+                return completedState = 3;
+            case 4: // Not completed, no deadline set
+                checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
+                checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
+                deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
+                return completedState = 4;
+            case 5: // Completed, no deadline set
+                checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
+                checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
+                deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
+                return completedState = 5;
             case 99: // Fallback value 
+                checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
+                checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
+                deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 console.log("Invalid, false or default date object. Interval not applied!");
-                break;
+                return completedState = 99;
             default: 
                 console.log("Something unexpected happened. CompletedState variable invalid. Interval not applied!");
-                break;
+                return completedState = false;
         }
     }
 
     function checkboxEvent() {
+        // if (typeof)
         // Advanced condition check based on completion timing 
         currentTimeDate = new Date(); // Refresh the current time for the interval
-        if (deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300){
-            completedState = 4;} // No deadline set
-        else if (newCheckbox.checked == false 
-            && deadlineParsed > currentTimeDate) 
-            {completedState = 0;} // Not completed, before deadline
-        else if (newCheckbox.checked == false 
-            && deadlineParsed < currentTimeDate) 
-            {completedState = 1;} // Not completed, after deadline
-        else if (newCheckbox.checked == true 
-            && deadlineParsed > currentTimeDate) 
-            {completedState = 2;} // Completed, before deadline
-        else if (newCheckbox.checked == true 
-            && deadlineParsed < currentTimeDate) 
-            {completedState = 3;} // Completed, after deadline
-        else {completedState = 99;} // Default value for error handling
+       // This condition check will assign the DOM value if there isn't any parameter value passed.
+        completed = newCheckbox.checked;
+        if (completed == false && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+            completedState = 4;} // Not completed, no deadline set 
+        else if (completed == true && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+            completedState = 5;} // Completed, no deadline set
+        else if (!completed && deadlineParsed > currentTimeDate) {
+            completedState = 0;} // Not completed, before deadline
+        else if (!completed && deadlineParsed < currentTimeDate) {
+            completedState = 1;} // Not completed, after deadline
+        else if (completed && deadlineParsed > currentTimeDate) {
+            completedState = 2;} // Completed, before deadline
+        else if (completed && deadlineParsed < currentTimeDate) {
+            completedState = 3;} // Completed, after deadline
+        else {
+            completedState = 99;} // Default value for error handling
         
         console.log("Checkbox event triggered. Completion state: " + completedState); 
-        completedStateCheck(completedState, newCheckbox, taskID, deadlineParsed);}; // Copilot is a great tool for writing code, but it's not perfect. It's important to understand the code you're writing. (That was written by copilot). Btw, this is also a ternary operator. If the checkbox is checked, it'll return 1, otherwise 0.
-        
+        completedStateCheck(completedState, newCheckbox, taskID, deadlineParsed);
+    }; // Copilot is a great tool for writing code, but it's not perfect. It's important to understand the code you're writing. (That was written by copilot). Btw, this is also a ternary operator. If the checkbox is checked, it'll return 1, otherwise 0.
+
+
         // This will work because the HTML objects will return FALSE if nothing is inputted. When loading the application, the form is empty by default anyways, so this will work.
         newCheckbox.addEventListener("change", checkboxEvent);
         checkboxEvent();
@@ -249,14 +274,15 @@ function handleClick(event) {
     // Test message to show the function runs when you click "add"
     console.log("Running handleClick");
     const taskID = storageHandler.generateUniqueID();
-    const title = submitText.value || "Task Title";
-    const priority = document.getElementById("priorityField").value || "medium";
-    const description = descriptionText.value || "";  // Default to an empty description
+    const title = submitText.value || "No Title";
+    const priority = document.getElementById("priorityField").value || "Medium";
+    const description = descriptionText.value || "No description";  
     const completed = false;
     const deadlineOutput = parseDeadline(deadlineInput) || false;
+    const completionDate = false;
 
 
-    const newTask = createTaskElement(taskID, title, description, completed, deadlineOutput, completedState, priority);
+    const newTask = createTaskElement(taskID, title, description, completed, deadlineOutput, priority, completionDate);
     document.getElementById("taskList").appendChild(newTask);
 
     // Clear both input fields for additional entries
@@ -266,6 +292,7 @@ function handleClick(event) {
     deadlineDatePointer.value = "";
     deadlineTimePointer.value = "";
 
+
     // Save to local storage
     storageHandler.saveTask(taskID, {
         id: taskID,
@@ -273,7 +300,8 @@ function handleClick(event) {
         description: description,
         completed: completed,
         deadline: deadlineOutput,
-        priority: priority
+        priority: priority,
+        completionDate: completionDate
         /* Additional data points from e.g localStorageHandler can pass new key:value pairs into the localStorage JSON */
     })
 }
