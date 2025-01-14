@@ -1,5 +1,6 @@
 html {
-    height: 100%;
+    width: 100%;
+    height: 100vh;
     zoom: 125%; /* Global scaling for the webpage to be more readable */
 }
 
@@ -7,11 +8,13 @@ body {
     /* Fun fact: Comic Sans is the most accessible font for dyslexic people. Also it's funny */
     font-family: 'Comic Sans MS', cursive, sans-serif;
     text-align: center;
+    margin: 0px;
     background: linear-gradient(90deg, #F4C6F2, #F3D7F4, #E2D2F6, #BDEDFB, #AAE0F0);
     background-size: 1000% 1000%; /* Expands the background canvas to give the browser space to scroll through the colors */
     animation: colorShift 8s linear infinite alternate;
     /* Linear makes the animation go from 0% to 100% at a constant speed */
 }
+
 .darkmode {
     background: linear-gradient(90deg, #0d0d0d, #1a1a1a, #262626, #333333, #404040);
     background-size: 1000% 1000%;
@@ -37,13 +40,17 @@ body {
         background-position: 100% 50%;
     }
 }
+
+nav {
+    margin: 0;
+    padding: 0;
+}
 nav > ul{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    
+    border: .20em solid var(--glow-color);
+    border-style: solid;
 }
 nav>ul>li {
     display: flex;
@@ -56,8 +63,9 @@ main {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
     align-items: center;
-    gap: 10px; /* Space between elements */
 }
+
+
 
 #storageUnavailable {
     display: none;
@@ -95,6 +103,29 @@ main {
     width: 100%;
 }
 
+.priorityBox- { /* Fallback styling*/
+    width: 100%;
+    height: 10px;
+    background: orange;
+}
+
+.priorityBox-High, .priorityBox-Medium, .priorityBox-Low{
+    width: 100%;
+    height: 5px;
+}
+
+.priorityBox-High {
+    background: linear-gradient(90deg, #FF6347, #FF4500);
+}
+
+.priorityBox-Medium {
+    background: linear-gradient(90deg, #FFD700, #FFA500, #FF8C00);
+}
+
+.priorityBox-Low {
+    background: linear-gradient(90deg, #32CD32, #228B22);
+}
+
 #taskField {
     font-family: 'Comic Sans MS', cursive, sans-serif;
     width: 50%;
@@ -110,25 +141,8 @@ main {
     resize: none; /* Disables resizing */
 }
 
-.priorityBox {
-    size: 10px;
-    background: blue;
-}
-
-.priority-high {
-    background-color: red;
-}
-
-.priority-medium {
-    background-color: orange;
-}
-
-.priority-low {
-    background-color: green;
-}
-
-.taskDelete {
-    justify-content: right;
+.priorityField {
+    display: grid;
 }
 
 .taskDelete:hover, .taskDelete:focus {
@@ -141,7 +155,10 @@ main {
     size: 3rem;
 }
 
-
+#inputarea {
+    margin: 0%;
+    padding: 0%;
+}
 
  /* This checks for any ID that contains a label and a checkbox in a True state */
 input[type="checkbox"]:checked + label {
@@ -177,7 +194,7 @@ input[type="checkbox"]:checked + label {
     width: auto;
 
     border-image-source: linear-gradient(30deg, #8f8f8f, #cecece);
-    border-style: solid;
+    border-style: ridge;
     border-image-slice: 1;
     border-width: 6px;
 }
