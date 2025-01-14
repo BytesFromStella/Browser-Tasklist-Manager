@@ -1,6 +1,6 @@
 // LOCAL CLIENT STORAGE HANDLER
 
-const storageHandler = {
+const storageHandler = { 
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
             const test = '__localStorage_test__';
@@ -15,7 +15,7 @@ const storageHandler = {
         }
     },
 
-    saveTask: function(taskID, taskData) { // Modularized this function to make it reusablez
+    saveTask: function(taskID, taskData) { // Modularized this function to make it reusable
         if (!this.storageTest()) { // The ! does the same as (this.storageTest === false);
             console.error("Saving unavailable. Check localStorage permissions");
             return;
@@ -42,14 +42,34 @@ const storageHandler = {
             if(key === "darkmode") {console.log("Darkmode key detected. Skipping..."); continue;} // The continue syntax skips the current iteration and moves to the next one
             if(key!=0 || key!= false){
                 const taskData = JSON.parse(localStorage.getItem(key));
+
+                
+                //TODO: This line converts the deadline value into a date. I have condition checks for falsey values in coreTaskList.js. Should look at this later
                 let deadline = new Date (taskData.deadline) || false; // Parsing to prevent unexpected behavior elsewhere and keep it consistently as a Date object.
-                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline);
+                
+                
+                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline, taskData.priority);
                 insertToTarget.appendChild(taskElement);
                 console.log("Saving item to LocalStorage (see next line):")
                 console.log(taskElement);
             }
         } 
         console.log("Tasks successfully loaded");
+    },
+    // TODO: Create a new function called generateUniqueOrderID. It will be used to sort tasks around in the list.
+    generateUniqueNumber: function(prefix) { 
+        
+        
+        let counter = 0;
+        do {
+            if (prefix) {key = `${prefix}-${counter}`}
+            else {key = counter}; // prints "ID" along with the taskID number right after, stringified
+            counter++
+        }  while (localStorage.getItem(key) ||  document.getElementById(key) !== null) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
+            // This way of error handling works good, but the order of tasks might end up different than original
+        }                                                        // localStorage will return NULL if the key (storeTaskID) is duplicate or doesn't exist. 
+        console.log('Unique ID generated:'+key);
+        return taskID; // return the ID number as a result of the function
     },
 
     generateUniqueID: function() { 
