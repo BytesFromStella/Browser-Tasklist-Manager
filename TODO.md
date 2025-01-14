@@ -35,13 +35,21 @@ COMPLETED 22.11.24 (slow implementation cus sick and busy)
 # **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
 
-## Create a more dynamic, aestethicly pleasing experience
-Anything minor that will make the website look more modern, authentic and feature rich. Items that doesn't deserve it's own section goes here:
-### Example
-which is where I would write more about it
+# Create a quick start guide for the application GitHub page
+This will make it so people who are less adept at using GitHub (or computers in general) will have an easier time trying out the application I made.
+
+## Create a more responsive, dynamic and aestethicly pleasing experience
+- Add responsive design with mobile phone scaling.
+- Implement drag and drop for tasks.
+- Implement order numbers.
+- Implement automatic sorting algorithms for order numbers. If none present, generate one. 
+Use priority as default, and use a drag&drop to assign a value. Decide if there should be a default value for order based on when it's generated. Add a fallback function to this using priority, will only run if an item is falsey
+- Add an alertbox confirmation when a user tries to uncheck a completion box
+- Replace the deadline timer with a completion date. Make sure to remove the striking text tranformation when you do so.
+- Add CSS- or JS-code to jump to items that have been created. Potential play an animation like a zoom-bounce or flash. Maybe even flashing the border between two colors (like red and green, rapidly).
 
 ## Task editing
-Allow existing tasks to be edited by either hitting an "edit" button or double-clicking it
+Allow existing tasks to be edited by either hitting an "edit" button or double-clicking the list item.
 
 ## Reorganize tasks
 Allow tasks to be moved around based on importance/priority by the user.
@@ -55,6 +63,8 @@ Allow adding and linking images to tasks that are automatically resized to the t
 Could also make it allow drag&drop into each task box.
 ## Random image picker
 Click a button to randomly select an image that is pulled from an API.
-## Star/rain animation and different hues
+## Star/rain animation~~ and different hues~~
 Allow the user to toggle between preset hues for the background with a few buttons. Alternatively I'll allow the user to pick the hue themself.
+COMPLETED Hues 12.01.25
+Added a dark mode instead. Might shelf this feature
 
