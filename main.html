@@ -10,32 +10,30 @@
 <header><h1>Task List Manager</h1></header>
 <nav>
     <ul id="navbar">
-        <li>Fuck it, dark mode. Check this box to enable it: <br><input type="checkbox" id="darkmodeToggle"> </li>
+        <p>Fuck it, dark mode. Check this box to enable it: <br><input type="checkbox" id="darkmodeToggle"> </li></p>
     </ul>
 </nav>
+
 <main>
-    <div id="storageUnavailable"> <h1>ERROR! Local storage is not available. Did you disable cookies?</h1>
-        New tasks will NOT save. You might have duplicate IDs and some features might break.
-        Check out this link on how to re-enable it: https://allaboutcookies.org/how-to-manage-cookies
-    </div>
     <div id="inputarea">
         <!-- Title Input Field -->
         <p>Title<br>
         <input type="text" placeholder="Task Title"  id="taskField" required>
         </p>
         <p id="priorityArea">
-            Priority
+            Priority<br>
             <select id="priorityField">
-                <option value="high">High</option>
-                <option value="medium" selected>Medium</option>
-                <option value="low">Low</option>
+                <option value="High">High</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Low">Low</option>
             </select> 
         </p>
         <!-- Deadline date+time -->
         <p id="deadlineArea">
-        Deadline (need both date and time)<br>
+        Deadline (need full date and/or time)<br>
         <input type="date" id="deadlineDateField"> <br>
-        <input type="time" id="deadlineTimeField"> 
+        <!-- I could do value="23:59" here for a defaul, but that would defeat the purpose of the fallback logic, and people wouldn't use it -->
+        <input type="time" id="deadlineTimeField">  
         </p>
 
         <p>
@@ -48,19 +46,23 @@
         <button type="submit" id="submitButton">Add</button> | 
         <button type="submit" id="removeAllButton" onclick="storageHandler.deleteAll()">Remove ALL</button>
    </div>
+    <div id="storageUnavailable"> <h1>ERROR! Local storage is not available. Did you disable cookies?</h1>
+        New tasks will NOT save. You might have duplicate IDs and some features might break.
+        Check out this link on how to re-enable it: https://allaboutcookies.org/how-to-manage-cookies
+    </div>  
     <!-- Task List-->
     <ul id="taskList">
         <div class="taskItem">Example Task 1</div>
         <div class="taskItem">Example Task 2</div>
         <div class="taskItem">Example Task 3</div>
     </ul>
-
 </main>
 
-<footer>By Stella Tvenning &#169;2024</footer><!-- unicode for the copyright symbol-->
+<footer>By Stella Tvenning &#169;2024-2025</footer><!-- unicode for the copyright symbol-->
 </body>
 
 <script src="coreTaskList.js"></script>
 <script src="localStorageHandler.js"></script>
 <script src="deadlineTimer.js"></script> 
+<!-- Might implement, most likely discard <script src="scroll.js"></script> -->
 </html>
