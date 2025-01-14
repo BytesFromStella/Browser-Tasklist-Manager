@@ -1,18 +1,31 @@
+# Quickstart guide
+## Download
+[Click me to download.](https://github.com/BytesFromStella/Browser-Tasklist-Manager/archive/refs/heads/main.zip)
+Instantly start using the application by opening ``main.html`` from the downloaded folder. **Make sure to unpack the zip-file first.**
+
+If the link is broken; get the application by downloading it from the GitHub page you're currently looking at with the green CODE button, then "download zip", or clone it with your IDE.
+
+## How to use
+The application is (supposed to be) pretty user friendly.
+
 # Task List Program
 
 This project's main purpose is to at minimum produce a barebones task list program in the browser. This project should do me good in the future and to refresh all my skill within web development that has been dormant for tooooo long. 
 Also other people can read what I write. Isn't that cool?
-I will be using ChatGPT models to figure out concepts and arguments to use in my code, but none of the code is directly copy-pasted. Everything is manually written by me and if there's something new that I didn't understand from before I will either document it here or comment it directly in the code!
+I will be using GPT models to figure out concepts and arguments to use in my code, but none of the code is directly copy-pasted. Almost everything is manually written by me and if there's something new that I didn't understand from before I will either document it here or comment it directly in the code!
 Why use a chatGPT model for this? Researching all the individual parts manually constantly when encountering hiccups or obstacles is extremely time consuming. It'll also make consulting about decisions and the next steps required very fluent, as well as giving me checklists for the new features and what it needs. This way I know what syntax to use where and how to structure it.
+
+If there's obviously a pretty braindead section of code (like the conditional border styling), then this will be auto-generated for things like color gradients and schemes.
 
 ## Core Features
 
 - Fancy background with a gradient animation across the webpage
-- Submission field with a functional "add" button. ENTER key in the input field also works.
+- Submission field with a functional "add" button. ENTER key in the description field also works.
 - Generation of new task list objects using JavaScript.
 - Styling completed tasks and hovering effects on buttons like DELETE and ADD.
 - My cool and awesome new name and signature at the bottom of the page
 - Local saving and loading of task elements
+- Dynamic color gradients on all relevant objects based on time left, completion status and priority.
 - **Color marking of deadlines**: Tasks are color-coded based on their deadlines using gradients.
 - **Clear ALL button**: Erases all tasks currently being displayed and stored in the local client.
 
@@ -31,17 +44,26 @@ It also contains a hidden error message if the user doesn't allow cookies or hav
 
 ## CSS / Styling sheet
 For the whole document, I'm justifying all the content to the center for easy scaling and readability. Who wants to use a website where everything justified to the left?
-Better styling work and documentation will be added at a later point 
+Global zoom for the entire document is ~125% due to sizing on higher resolution screens. This is a tempoary solution until different viewports are implemented.
 
-### Scoping (CSS)
+The CSS will contain most of the responsive design elements like glowing buttons and object scaling. The menu will be at the top. New items added in the application should flash or bouce in some way to signify the position.
+
+The mobile viewport version will have a max list item of 1 item per row to make it as consistent and user friendly as possible. 
+
+The nav bar, main, the unordered list and the items inside each list item is aligned using flexboxing. Max amount of items per line is 3.
+Better styling work and documentation will be added at a later point 
+Priority color lines have an assigned CSS-class for each type (High, Medium, Low). 
+
+### CSS - Scoping
 The formatting and scoping logic used in the styling sheet is pretty standard.
 Pointer declaration, followed by same-line opening curly-bracket. Afterwards, a line shift with all the values using an indent.
 
 ### Object structuring
-Every list item is currently display in a gridbox. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
+Every list item is currently display in a gridbox on main. Main is currently scaled at 100%. This might change later to be centred on 75% of the canvas, and the other 25% being a menu of sorts.
 The objects currently are allowed to have different heights, but this will change in the future. They are still aligned correctly.
 
 ### Colorshift Animation
+There's a toggle for darkmode in the JS-script that replaces the hue with dark colors. Therefore the animation is always in use.
 The colorshift animation is quite straightforward in how it works.
 ```css
 animation: colorShift 8s ease infinite alternate;
@@ -56,7 +78,7 @@ animation: colorShift 8s ease infinite alternate;
 For some reason, gradients are not supported for borders. So I must come up with an alternative solution:
 - Use **border-image-source** to define the gradient
 - Use **border-image-slice: 1;** to fill the border with the gradient
-- Use **border-style: solid;** to make it into a solid color. I might make this transparent instead (tehe, get it?)
+- Use **border-style: solid;** to make it into a solid color. I might change this at a later point to a transparent border of some kind instead (tehe, get it?)
 
 ### Body 
 - I'm using Comic Sans MS font for easy readability for dyslexic people, and because it looks funny. Why not, right?
@@ -110,7 +132,15 @@ The deadline consists of two parameters:
 - Time
 Together, they're joined with a "T" in the middle to create an ISO 8601 JSON string date object. JS has native support for this and can be passed to a database as a universal time standard.
 
-After dawdling with the deadline code logic for WAY too long, I decided to hardcode it into the ``createTaskElement`unction. I cannot grab the values
+After dawdling with the deadline code logic for WAY too long, I decided to hardcode it into the ``createTaskElement` function due to time. It's hard to grab the values otherwise. This will need to be reworked into **deadlineTimer.js**
+
+### Condition statements, state trackers and switch cases
+The core script uses a state tracker to check which situation the task item applies to. It can have more than a on or off state due to the different parameters it can contain.
+I have defined 8 different states for a task item:
+``State 0: Not completed, before deadline``- Will apply if the task hasn't been completed and it hasn't expired.
+``State 1: Not completed, after deadline`` - If the item is expired, it will trigger this state; causing the border to go red using the timelimitApplied function in deadlineTimer.js.
+``State 2: Completed, before deadline`` - Will color the border green when you complete the item before your deadline
+
 
 ## Javascript - deadlineTimer.js
 The rest of the logic based around timers and deadlines is processed in ``deadlineTimer.js``.
@@ -125,7 +155,7 @@ if (!this.storageTest()) {
         }
 ```
 This will make the function return the error message in the console and since the condition check was false, it'll also display HTML with red error text. Oooo, red text is scaaaaaaaaary!
-The exclamation mark "negates" the boolean, effectively making it a negative condition check. So if the condition check returns false, it'll execute the catch block in the existing condition check and the block in the respective function called. In this case:
+The exclamation mark "negates" or "flips" the boolean, effectively making it a negative condition check. So if the condition check returns false, it'll execute the catch block in the existing condition check and the block in the respective function called. In this case:
 ```javascript
             console.error("Cannot complete operation. Check localStorage permissions");
 ```
@@ -156,6 +186,8 @@ Let's say the total amount of items is 5. You delete ID 2, 3 and 4. (ID 0 is not
 ## generateUniqueID
 This function will generate a unique ID every time a DOM object is created and saved into localStorage. The id is structed as "ID-{number}" inside localStorage.
 That means no task can have the ID value 0. They always start from 1. This will have no impact on further code and features and is merely an aestethic decision.
+
+The reason for doing it like this is potential future use.
 
 ## deleteTask
 This function is called inside handleClick in coreTaskList. It will simply grab the ID from the task and delete the HTML object and the key-value pair with the coresponding JSON-object in localStorage.
