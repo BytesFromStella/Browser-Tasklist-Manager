@@ -6,7 +6,13 @@ Instantly start using the application by opening ``main.html`` from the download
 If the link is broken; get the application by downloading it from the GitHub page you're currently looking at with the green CODE button, then "download zip", or clone it with your IDE.
 
 ## How to use
-The application is (supposed to be) pretty user friendly.
+The application is (supposed to be) pretty user friendly. Just type in the following to add it: 
+- Title of your task 
+- Deadline date and time (Full time or full date)
+- The priority of the task (High, medium, low)
+- Description
+
+EVERY entry is optional. Heck, you can enter a completely empty reminder.... but why would you?
 
 # Task List Program
 
