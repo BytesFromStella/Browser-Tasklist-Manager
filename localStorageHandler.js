@@ -3,6 +3,7 @@
 const storageHandler = { 
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
+            // throw new Error("Test error"); // Test error handling
             const test = '__localStorage_test__';
             /*Object.freeze(localStorage); // Flip to resume/pause error condition. Test code for error handling */
             localStorage.setItem(test, test);
@@ -26,6 +27,8 @@ const storageHandler = {
         localStorage.setItem(taskID, JSON.stringify(newTaskData)) // Saving it as a JSON will make it alot easier to get the key-value pairs
         console.log("Task successfully saved to localStorage");
     }, // In JS we add a comma to seperate 2 or more functions within an object literal or method list, except the last one
+
+    //TODO: Create a seperate "updateTask" method for use with things like database queries
 
     loadAllTasks: function() {
         if (!this.storageTest()) { 
@@ -109,7 +112,7 @@ const storageHandler = {
             console.log("Delete ALL task aborted");
         }
     }
-}
+};
 
 window.onload = function() {
     // Loading handler will go here 
