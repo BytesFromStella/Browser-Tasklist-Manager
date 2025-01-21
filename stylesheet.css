@@ -17,7 +17,7 @@ body {
 
 .darkmode {
     background: linear-gradient(90deg, #0d0d0d, #1a1a1a, #262626, #333333, #404040);
-    background-size: 1000% 1000%;
+    background-size: 10000% 10000%;
     animation: colorShift 8s linear infinite alternate;
     color: white;
 }
