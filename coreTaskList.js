@@ -219,11 +219,13 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
                 checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
                 checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
+                storageHandler.saveTask(taskID, {completionDate: false});
                 return completedState = 4;
             case 5: // Completed, no deadline set
                 checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
                 checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
+                storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
                 return completedState = 5;
             case 99: // Fallback value 
                 checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
@@ -245,7 +247,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
         completed = newCheckbox.checked;
         if (completed == false && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
             completedState = 4;} // Not completed, no deadline set 
-        else if (completed == true && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+        else if (completed == true) {
             completedState = 5;} // Completed, no deadline set
         else if (!completed && deadlineParsed > currentTimeDate) {
             completedState = 0;} // Not completed, before deadline
@@ -258,7 +260,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
         else {
             completedState = 99;} // Default value for error handling
         
-        console.log("Checkbox event triggered. Completion state: " + completedState); 
+        console.log("Checkbox event triggered. Completion state: " + completedState + "in task: "+ taskID); 
         completedStateCheck(completedState, newCheckbox, taskID, deadlineParsed);
     }; // Copilot is a great tool for writing code, but it's not perfect. It's important to understand the code you're writing. (That was written by copilot). Btw, this is also a ternary operator. If the checkbox is checked, it'll return 1, otherwise 0.
 
