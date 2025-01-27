@@ -12,20 +12,125 @@ const config = {
     }
 };
 
-const sql = require('mssql');
-
 const db = {
-    sendTask: async function(taskID, taskData) {
+    sendTask: async function(taskID, taskData) { // Running async here to prevent a hang from bad networking
+        if (DBstate == 0) {return;}
         try {
             console.log("Sending task...")
-            let response = await fetch(`http://localhost:5000/saveTask/${taskID}`); // Running await here to prevent a hang from bad networking
+            let response = await fetch(`http://localhost:5000/saveTask/${taskID}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                    "DeleteAll":"false",
+                },
+                body: JSON.stringify({
+                    taskID: taskID,
+                    title: taskData.title,
+                    description: taskData.description,
+                    completed: taskData.completed,
+                    deadline: taskData.deadline,
+                    priority: taskData.priority,
+                    completionDate: taskData.completionDate
+                })
+            
+            });
             
         }
         catch(e) {
-
+            console.log("Failed to send task data to server/backend")
         }
     },
 
+    retrieveTask: async function(taskID) {
+        if (DBstate == 0) {return;}
+        try {
+            console.log("Retrieving task...")
+            let response = await fetch(`http://localhost:5000/retrieveTask/${taskID}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type":"application/json",
+                    "DeleteAll":"false",
+                },
+                body: JSON.stringify({
+                    taskID: taskID, // Object keys are treated like strings by default
+        
+
+                })
+            }); // Running async here to prevent a hang from bad networking
+            
+        }
+        catch(e) {
+            console.log("Failed to retrieve task data from server/backend")
+        }
+    },
+
+
+    editTask: async function(taskID, taskData) {
+        if (DBstate == 0) {return;}
+        try {
+            console.log("Editing task...")
+            let response = await fetch(`http://localhost:5000/editTask/${taskID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type":"application/json",
+                    "DeleteAll":"false",
+                },
+                body: JSON.stringify({
+                    taskID: taskData.taskID,
+                    title: taskData.title,
+                    description: taskData.description,
+                    completed: taskData.completed,
+                    deadline: taskData.deadline,
+                    priority: taskData.priority,
+                    completionDate: taskData.completionDate
+                })
+            }); 
+        }
+        catch(e) {
+            console.log("Failed to update task data on server/backend")
+        }
+    },
+
+    deleteTask: async function(taskID) {
+        if (DBstate == 0) {return;}
+        try {
+            console.log("Editing task...")
+            let response = await fetch(`http://localhost:5000/deleteTask/${taskID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type":"application/json",
+                    "DeleteAll":"false",
+                },
+                body: JSON.stringify({
+                    taskID: taskID
+                })
+            }); 
+        }
+        catch(e) {
+            console.log("Failed to delete task data on server/backend")
+        }
+    },
+
+
+    deleteAll: async function() {
+        if (DBstate == 0) {return;}
+        try {
+            console.log("Editing task...")
+            let response = await fetch(`http://localhost:5000/deleteTask/1`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type":"application/json",
+                    "DeleteAll":"false",
+                },
+                body: JSON.stringify({
+                    taskID: taskID
+                })
+            }); 
+        }
+        catch(e) {
+            console.log("Failed to delete task data on server/backend")
+        }
+    }
         // This function will be used to send the task data to the server
 
         // The server will then store the data in a database
@@ -39,4 +144,4 @@ const db = {
         //     this.saveTask(taskID, taskData);
         //     DBstate = 0;
         // }
-    };
+};

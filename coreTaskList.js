@@ -69,7 +69,6 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     priorityBox.className = "priorityBox-" + priority || "priorityBox-"
     titleField.innerHTML += "<br>";
     newTask.appendChild(priorityBox);
-    // priorityBox.style.backgroundColor = priority;
     
     
     // Description
@@ -88,30 +87,53 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
    const deadlineField = document.createElement("div");
    deadlineField.className = "deadline";
    newTask.appendChild(deadlineField);
+ 
+    // Checkbox
+   const newCheckbox = document.createElement("input");
+   newCheckbox.type = "checkbox";
+   newCheckbox.checked = completed; // To easily extract the boolean for later use
+   newCheckbox.id = "taskComplete";
+   newCheckbox.className = "taskComplete";
+   newTask.appendChild(newCheckbox);
 
+   completionDate = new Date(completionDate);
    let deadlineDateandTime = document.createElement("p");
    deadlineDateandTime.id = "deadlineDateandTime";
    deadlineDateandTime.className = "deadlineDateandTime";
-   if (deadlineParsed == false || deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
-       // Handle the case where the deadline is not set or is the default date
-       deadlineDateandTime.innerHTML = "No deadline set";
-   } else {
-       deadlineDateandTime.innerHTML = 
-           "Deadline: "+"<br>"+
-           String(deadlineParsed.getMonth()+1).padStart(2, "0")+"."+
-           String(deadlineParsed.getDate()).padStart(2, "0")+"."+
-           String(deadlineParsed.getFullYear()) + " | "+
-           String(deadlineParsed.getHours()).padStart(2, "0")+":"+
-           String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>";
-   }
-   newTask.appendChild(deadlineDateandTime);
-    // Checkbox
-    const newCheckbox = document.createElement("input");
-    newCheckbox.type = "checkbox";
-    newCheckbox.checked = completed; // To easily extract the boolean for later use
-    newCheckbox.id = "taskComplete";
-    newCheckbox.className = "taskComplete";
-    newTask.appendChild(newCheckbox);
+   
+   function updateDates() {
+    if (completed == true) {
+        deadlineDateandTime.innerHTML =
+        "Completed date:"+"<br>"+
+        String(completionDate.getMonth()+1).padStart(2, "0")+"."+
+        String(completionDate.getDate()).padStart(2, "0")+"."+
+        String(completionDate.getFullYear()) + " | "+
+        String(completionDate.getHours()).padStart(2, "0")+":"+
+        String(completionDate.getMinutes()).padStart(2, "0")+"<br>"
+        +
+        "Deadline: "+"<br>"+
+        String(deadlineParsed.getMonth()+1).padStart(2, "0")+"."+
+        String(deadlineParsed.getDate()).padStart(2, "0")+"."+
+        String(deadlineParsed.getFullYear()) + " | "+
+        String(deadlineParsed.getHours()).padStart(2, "0")+":"+
+        String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>";
+    }
+    else if (deadlineParsed == false || deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+        // Handle the case where the deadline is not set or is the default date
+        deadlineDateandTime.innerHTML = "No deadline set";
+    } 
+    else if (deadlineParsed == true) {
+        deadlineDateandTime.innerHTML = 
+            "Deadline: "+"<br>"+
+            String(deadlineParsed.getMonth()+1).padStart(2, "0")+"."+
+            String(deadlineParsed.getDate()).padStart(2, "0")+"."+
+            String(deadlineParsed.getFullYear()) + " | "+
+            String(deadlineParsed.getHours()).padStart(2, "0")+":"+
+            String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>";
+    }
+        else { deadlineDateandTime.innerHTML = "An error occured, and condition checks failed"}
+        newTask.appendChild(deadlineDateandTime);
+    }
     
     // Delete button
     const deleteButton = document.createElement("button");
@@ -181,15 +203,14 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     function completedStateCheck(completedState, completed, taskID, deadlineParsed) {
         let deadlineHTMLPointer = deadlineField;
         let titleHTMLpointer = titleField
+        console.log(completedState);
         switch (completedState) {
             case 0: // Not completed, before deadline
                 checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
                 checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
-                
-
-                
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed); // This will instantly refresh the border style to the uncompleted style
                 startCountdown(deadlineParsed, deadlineField);
+                updateDates()
                 storageHandler.saveTask(taskID, {completionDate: false});
                 console.log("Task not completed. Applying intervals");
                 return completedState = 0;
@@ -199,6 +220,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed); // This will instantly refresh the border style to the completed style          
                 storageHandler.saveTask(taskID, {completionDate: false});
                 startCountdown(deadlineParsed, deadlineField);
+                updateDates()
                 console.log("Task completed. Interval not applied");
                 return completedState = 1;
             case 2: // Completed before deadline
@@ -206,14 +228,17 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
                 checkboxStylingComplete(taskID, titleHTMLpointer, completed, completedState);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
-                stopCountdown(newTask); 
+                deadlineField
+                stopCountdown(); 
+                updateDates()
                 return completedState = 2;
             case 3: // Completed after deadline
                 checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
                 checkboxStylingComplete(taskID, titleHTMLpointer, completed, completedState);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
-                stopCountdown(newTask); 
+                stopCountdown(); 
+                updateDates()
                 return completedState = 3;
             case 4: // Not completed, no deadline set
                 checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
@@ -226,18 +251,22 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
                 checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completed: completed.checked, completionDate: new Date()});
+                updateDates()
                 return completedState = 5;
             case 99: // Fallback value 
                 checkboxStylingUncomplete(taskID, deadlineHTMLPointer, completed);
                 checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 console.log("Invalid, false or default date object. Interval not applied!");
+                updateDates()
                 return completedState = 99;
             default: 
                 console.log("Something unexpected happened. CompletedState variable invalid. Interval not applied!");
                 return completedState = false;
         }
     }
+
+    // Implement completiondate into task elements and clear it on unchecking completion.
 
     function checkboxEvent() {
         // if (typeof)
@@ -247,7 +276,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
         completed = newCheckbox.checked;
         if (completed == false && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
             completedState = 4;} // Not completed, no deadline set 
-        else if (completed == true) {
+        else if (completed == true && deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
             completedState = 5;} // Completed, no deadline set
         else if (!completed && deadlineParsed > currentTimeDate) {
             completedState = 0;} // Not completed, before deadline

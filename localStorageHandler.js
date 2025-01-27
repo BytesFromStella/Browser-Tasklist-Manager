@@ -1,5 +1,7 @@
 // LOCAL CLIENT STORAGE HANDLER
 
+
+
 const storageHandler = { 
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
@@ -21,6 +23,9 @@ const storageHandler = {
             console.error("Saving unavailable. Check localStorage permissions");
             return;
         }
+        
+        db.sendTask(taskID, taskData); // DB METHOD //
+
         const existingTask = JSON.parse(localStorage.getItem(taskID)) || {}; // Add the new data or add an empty entry
         const newTaskData = { ...existingTask, ...taskData }; // Allows you to update/add existing entries
         
@@ -35,6 +40,8 @@ const storageHandler = {
             console.error("Loading unavailable. Check localStorage permissions");
             return;
         }
+        
+        db.retrieveTask(taskID);// DB METHOD //
 
         const insertToTarget = document.getElementById("taskList");
         insertToTarget.innerHTML = ""; // Clearing the list to prevent duplicate entires
@@ -51,7 +58,7 @@ const storageHandler = {
                 let deadline = new Date (taskData.deadline) || false; // Parsing to prevent unexpected behavior elsewhere and keep it consistently as a Date object.
                 
                 
-                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline, taskData.priority);
+                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline, taskData.priority, taskData.completionDate);
                 insertToTarget.appendChild(taskElement);
                 console.log("Saving item to LocalStorage (see next line):")
                 console.log(taskElement);
@@ -97,6 +104,9 @@ const storageHandler = {
             console.error("Deletion unavailable. Check localStorage permissions");
             return;
         }
+
+        db.deleteTask(taskID); // DB METHOD //
+        
         console.log(taskID);
         localStorage.removeItem(targetID); // No need for conditional statements here. If it can't delete the item, it should throw an error
         console.log("Task deleted successfully")
@@ -107,6 +117,9 @@ const storageHandler = {
             const list = document.getElementById("taskList");
             list.innerHTML = "";
             localStorage.clear();
+
+            db.deleteAll(); // DB METHOD //
+            
             alert("All tasks has been permanentely deleted.")
         } else {
             console.log("Delete ALL task aborted");

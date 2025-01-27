@@ -121,7 +121,8 @@ If you do not specify a catch block, the program will hang if the operation fail
 ``.then()`` blocks are code that is executed sequentially. If any of the statements fail, it'll hop right to the catch block.
 ``.finally()`` blocks are *always* executed. They are used in cleanup tasks or status reporting.    
 
-Null-Safe Access******
+## Null-Safe Access
+Using null-safe 
 
 ## Javascript - Indentation and spacing logic
 The indentation logic used in the different scripts are quite straightforward. I space each type of variable, declaration or object with a single lineshift, then followed by a double lineshift to make the code more readable. The indentation scope stays the same throughout the scripts with very few exceptions.
