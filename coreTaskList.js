@@ -118,7 +118,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
         String(deadlineParsed.getHours()).padStart(2, "0")+":"+
         String(deadlineParsed.getMinutes()).padStart(2, "0")+"<br>";
     }
-    else if (deadlineParsed == false || deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
+    else if (deadlineHandler.differenceInDays(deadlineParsed, currentTimeDate) <= -300) {
         // Handle the case where the deadline is not set or is the default date
         deadlineDateandTime.innerHTML = "No deadline set";
     } 
@@ -245,6 +245,7 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
                 checkboxStylingUncomplete(taskID, titleHTMLpointer, completed);
                 deadlineHandler.timelimitApplied(newTask, deadlineParsed, completed);
                 storageHandler.saveTask(taskID, {completionDate: false});
+                updateDates()
                 return completedState = 4;
             case 5: // Completed, no deadline set
                 checkboxStylingComplete(taskID, deadlineHTMLPointer, completed, completedState);
