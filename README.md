@@ -1,7 +1,7 @@
 # Quickstart guide
 ## Download
 [Click me to download.](https://github.com/BytesFromStella/Browser-Tasklist-Manager/archive/refs/heads/main.zip)
-Instantly start using the application by opening ``main.html`` from the downloaded folder. **Make sure to unpack the zip-file first.**
+Instantly start using the application by opening ``landingPage.html`` from the downloaded folder. **Make sure to unpack the zip-file first.**
 
 If the link is broken; get the application by downloading it from the GitHub page you're currently looking at with the green CODE button, then "download zip", or clone it with your IDE.
 
