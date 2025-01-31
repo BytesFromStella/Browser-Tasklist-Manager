@@ -42,6 +42,7 @@ COMPLETED 19.01.25
 ## Create a more responsive, dynamic and aestethicly pleasing experience
 - ~~Replace the deadline timer with a completion date. Make sure to remove the striking text tranformation when you do so.~~
     Completed 23.01.25
+- Add a splash/welcome page.
 - Implement order numbers.
 - Add responsive design with mobile phone scaling.
 - Implement drag and drop for tasks.

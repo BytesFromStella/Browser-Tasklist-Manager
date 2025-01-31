@@ -1,4 +1,4 @@
-DBstate = 0; // 0 = offline, 1 = online, flip to use. Will be connected to an eventlistener later on
+DBstate = 1; // 0 = offline, 1 = online, flip to use. Will be connected to an eventlistener later on
 
 const config = {
     // Complete config file with a custom user for this specific purpose.
@@ -22,6 +22,7 @@ const db = {
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
+                    "Access-Control-Allow-Origin":"true"
                 },
                 body: JSON.stringify({
                     taskID: taskID,
@@ -50,6 +51,7 @@ const db = {
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
+                    "Access-Control-Allow-Origin":"true"
                 },
                 body: JSON.stringify({
                     taskID: taskID, // Object keys are treated like strings by default
@@ -74,6 +76,7 @@ const db = {
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
+                    "Access-Control-Allow-Origin":"true"
                 },
                 body: JSON.stringify({
                     taskID: taskData.taskID,
@@ -100,6 +103,7 @@ const db = {
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
+                    "Access-Control-Allow-Origin":"true"
                 },
                 body: JSON.stringify({
                     taskID: taskID
@@ -121,6 +125,7 @@ const db = {
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
+                    "Access-Control-Allow-Origin":"true"
                 },
                 body: JSON.stringify({
                     taskID: taskID

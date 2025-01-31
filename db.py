@@ -7,11 +7,11 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://taskManager:InsecurePassword132@localhost/taskData?driver=ODBC+Driver+17+for+SQL+Server'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # CORS(app, resources={r"/*": {"origins":"*"}})
-CORS(app)
-#   (app, resources={r"/*": {
-#     "origins": ["http://localhost:3000", "http://localhost:5000", "null", "http://127.0.0.1:5500"], 
-#     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
-#     "allow_headers": ["Content-Type"]}})
+CORS(
+    app, resources={r"/*": {
+     "origins": ["http://localhost:3000", "http://localhost:5000", "http://127.0.0.1:5500", "http://127.0.0.1:5501"], 
+     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+     "allow_headers": ["Content-Type", "Authorization"]}})
 
 
 db = SQLAlchemy(app)
