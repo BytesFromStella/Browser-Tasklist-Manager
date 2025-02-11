@@ -1,8 +1,11 @@
 // LOCAL CLIENT STORAGE HANDLER
 
+
+
 const storageHandler = { 
     storageTest: function() { // Simply test if storing works to prevent other errors
         try {
+            // throw new Error("Test error"); // Test error handling
             const test = '__localStorage_test__';
             /*Object.freeze(localStorage); // Flip to resume/pause error condition. Test code for error handling */
             localStorage.setItem(test, test);
@@ -20,6 +23,9 @@ const storageHandler = {
             console.error("Saving unavailable. Check localStorage permissions");
             return;
         }
+        
+        db.sendTask(taskID, taskData); // DB METHOD //
+
         const existingTask = JSON.parse(localStorage.getItem(taskID)) || {}; // Add the new data or add an empty entry
         const newTaskData = { ...existingTask, ...taskData }; // Allows you to update/add existing entries
         
@@ -27,11 +33,15 @@ const storageHandler = {
         console.log("Task successfully saved to localStorage");
     }, // In JS we add a comma to seperate 2 or more functions within an object literal or method list, except the last one
 
+    //TODO: Create a seperate "updateTask" method for use with things like database queries
+
     loadAllTasks: function() {
         if (!this.storageTest()) { 
             console.error("Loading unavailable. Check localStorage permissions");
             return;
         }
+        
+        db.retrieveTask(taskID);// DB METHOD //
 
         const insertToTarget = document.getElementById("taskList");
         insertToTarget.innerHTML = ""; // Clearing the list to prevent duplicate entires
@@ -48,7 +58,7 @@ const storageHandler = {
                 let deadline = new Date (taskData.deadline) || false; // Parsing to prevent unexpected behavior elsewhere and keep it consistently as a Date object.
                 
                 
-                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline, taskData.priority);
+                const taskElement =  createTaskElement(taskData.id, taskData.title, taskData.description, taskData.completed, deadline, taskData.priority, taskData.completionDate);
                 insertToTarget.appendChild(taskElement);
                 console.log("Saving item to LocalStorage (see next line):")
                 console.log(taskElement);
@@ -56,20 +66,23 @@ const storageHandler = {
         } 
         console.log("Tasks successfully loaded");
     },
+    
     // TODO: Create a new function called generateUniqueOrderID. It will be used to sort tasks around in the list.
-    generateUniqueNumber: function(prefix) { 
-        
-        
+    // Result: Created generateUniqueNumber instead for more versatility and reusability :3
+    generateUniqueNumber: function(identifier) { 
+        if (!this.storageTest()) {
+            console.error("Cannot generate a unique number. LocalStorage is unavailable. Your new unique number may be duplicate");
+            return;
+        }
+
         let counter = 0;
         do {
-            if (prefix) {key = `${prefix}-${counter}`}
-            else {key = counter}; // prints "ID" along with the taskID number right after, stringified
-            counter++
-        }  while (localStorage.getItem(key) ||  document.getElementById(key) !== null) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
-            // This way of error handling works good, but the order of tasks might end up different than original
+            counter++;
+            key = `${identifier}-${counter}`
+        }  while (localStorage.getItem(key) ||  document.getElementById(key) !== null) { 
         }                                                        // localStorage will return NULL if the key (storeTaskID) is duplicate or doesn't exist. 
-        console.log('Unique ID generated:'+key);
-        return taskID; // return the ID number as a result of the function
+        console.log('Unique number generated: ' + counter);
+        return counter; // return the ID number as a result of the function
     },
 
     generateUniqueID: function() { 
@@ -83,7 +96,7 @@ const storageHandler = {
             taskID = `ID-${counter}`; // prints "ID" along with the taskID number right after, stringified
             counter++
         }  while (localStorage.getItem(taskID) ||  document.getElementById(taskID) !== null) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
-            // This way of error handling works good, but the order of tasks might end up different than original
+            // This way of error handling works good, but the order of tasks might end up different than originally intended
         }                                                        // localStorage will return NULL if the key (storeTaskID) is duplicate or doesn't exist. 
         console.log('Unique ID generated:'+taskID);
         return taskID; // return the ID number as a result of the function
@@ -94,6 +107,9 @@ const storageHandler = {
             console.error("Deletion unavailable. Check localStorage permissions");
             return;
         }
+
+        db.deleteTask(taskID); // DB METHOD //
+        
         console.log(taskID);
         localStorage.removeItem(targetID); // No need for conditional statements here. If it can't delete the item, it should throw an error
         console.log("Task deleted successfully")
@@ -104,12 +120,15 @@ const storageHandler = {
             const list = document.getElementById("taskList");
             list.innerHTML = "";
             localStorage.clear();
+
+            db.deleteAll(); // DB METHOD //
+            
             alert("All tasks has been permanentely deleted.")
         } else {
             console.log("Delete ALL task aborted");
         }
     }
-}
+};
 
 window.onload = function() {
     // Loading handler will go here 

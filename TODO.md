@@ -35,18 +35,31 @@ COMPLETED 22.11.24 (slow implementation cus sick and busy)
 # **Medium Priority**
 Stuff that I could add, but isn't necessarily essential.
 
-# Create a quick start guide for the application GitHub page
-This will make it so people who are less adept at using GitHub (or computers in general) will have an easier time trying out the application I made.
+# ~~Create a quick start guide for the application GitHub page~~
+~~This will make it so people who are less adept at using GitHub (or computers in general) will have an easier time trying out the application I made.~~
+COMPLETED 19.01.25
 
 ## Create a more responsive, dynamic and aestethicly pleasing experience
+- ~~Replace the deadline timer with a completion date. Make sure to remove the striking text tranformation when you do so.~~
+    Completed 23.01.25
+- Add a splash/welcome page.
+- Implement order numbers.
 - Add responsive design with mobile phone scaling.
 - Implement drag and drop for tasks.
-- Implement order numbers.
 - Implement automatic sorting algorithms for order numbers. If none present, generate one. 
 Use priority as default, and use a drag&drop to assign a value. Decide if there should be a default value for order based on when it's generated. Add a fallback function to this using priority, will only run if an item is falsey
-- Add an alertbox confirmation when a user tries to uncheck a completion box
-- Replace the deadline timer with a completion date. Make sure to remove the striking text tranformation when you do so.
-- Add CSS- or JS-code to jump to items that have been created. Potential play an animation like a zoom-bounce or flash. Maybe even flashing the border between two colors (like red and green, rapidly).
+- ~~Add an alertbox confirmation when a user tries to uncheck a completion box~~
+COMPLETED 02.07.25
+- ~~Add CSS- or JS-code to jump to items that have been created. Potential play an animation like a zoom-bounce or flash. Maybe even flashing the border between two colors (like red and green, rapidly).~~
+COMPLETED 02.07.25 - Added a bounce effect, no flashing. The browser jumps to the new item you create
+
+# Incorporate a backend
+Incorporate a backend using Flask and Python. 
+- Use Flask to generate new pages. It will push out a new page when you select an option from a menu.
+- Optional: Incorporate data sanitizing using Python
+--
+Kinda hardstuck on this. 
+--
 
 ## Task editing
 Allow existing tasks to be edited by either hitting an "edit" button or double-clicking the list item.
@@ -62,9 +75,9 @@ This is where I would babble about myself and the stuff I've made so far. Like a
 Allow adding and linking images to tasks that are automatically resized to the task box. These images shouldn't be stored by itself, but should point to the path used for the image. That means you can link an image from the internet or link one from your local computer.
 Could also make it allow drag&drop into each task box.
 ## Random image picker
-Click a button to randomly select an image that is pulled from an API.
+Click a button to randomly select an image that is pulled from an API. Try to use an API that pulls random ass memes. Because that would be funny asf.
 ## Star/rain animation~~ and different hues~~
-Allow the user to toggle between preset hues for the background with a few buttons. Alternatively I'll allow the user to pick the hue themself.
+~~Allow the user to toggle between preset hues for the background with a few buttons. Alternatively I'll allow the user to pick the hue themself.~~
 COMPLETED Hues 12.01.25
-Added a dark mode instead. Might shelf this feature
+Added a dark mode instead. Probably gonna shelf this feature
 
