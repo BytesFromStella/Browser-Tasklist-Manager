@@ -44,7 +44,7 @@ function parseDeadline(deadlineInput) {
 }
 
 
-function createTaskElement(taskID, title, description, completed, deadline, priority, completionDate) {
+function createTaskElement(taskID, title, description, completed, deadline, priority, completionDate, orderID) {
     console.log("Creating new DOM object");
     
     // Creating each HTML object to append to the HTML document
@@ -81,12 +81,16 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
    let deadlineParsed = parseDeadline(deadline);
    console.log(deadlineParsed);
 
-   // Ensure deadlineParsed is a Date object
-
-
+   // Deadline field
    const deadlineField = document.createElement("div");
    deadlineField.className = "deadline";
    newTask.appendChild(deadlineField);
+
+   // Order ID
+   const orderField = document.createElement("p");
+   orderField.className = "orderID";
+   if (!orderID) {let orderID = 0;}
+   orderField.innerHTML = orderID; 
  
     // Checkbox
    const newCheckbox = document.createElement("input");
@@ -295,9 +299,19 @@ function createTaskElement(taskID, title, description, completed, deadline, prio
     }; // Copilot is a great tool for writing code, but it's not perfect. It's important to understand the code you're writing. (That was written by copilot). Btw, this is also a ternary operator. If the checkbox is checked, it'll return 1, otherwise 0.
 
 
-        // This will work because the HTML objects will return FALSE if nothing is inputted. When loading the application, the form is empty by default anyways, so this will work.
-        newCheckbox.addEventListener("change", checkboxEvent);
-        checkboxEvent();
+        newCheckbox.addEventListener("change", function() {
+            if (newCheckbox.checked) {
+                // If checked, update state and trigger the event
+                checkboxEvent();
+            } else {
+                let response = confirm("Are you sure you want to uncheck the completed task?");
+                if (response) {
+                    checkboxEvent();
+                } else {
+                    newCheckbox.checked = true; // Revert if canceled
+                }
+            }
+        });
 
     return newTask; 
 }
@@ -312,12 +326,41 @@ function handleClick(event) {
     const completed = false;
     const deadlineOutput = parseDeadline(deadlineInput) || false;
     const completionDate = false;
+    const orderID = storageHandler.generateUniqueNumber("orderID") || false;
 
 
-    const newTask = createTaskElement(taskID, title, description, completed, deadlineOutput, priority, completionDate);
+    const newTask = createTaskElement(taskID, title, description, completed, deadlineOutput, 
+                                                                        priority, completionDate, orderID);
     document.getElementById("taskList").appendChild(newTask);
+    
+    function visualEffects(newTask) {
+        // Scrolls down to the new item added
+        newTask.scrollIntoView({ behavior: "smooth", block: "center" });
+    
+        // Listen for when the scroll completes before applying the animation
+        const onScrollEnd = () => {
+            console.log("Scrolling finished, applying bounce effect...");
+    
+            // Remove the event listener to prevent multiple executions
+            window.removeEventListener("scroll", onScrollEnd);
+    
+            // Apply a bounce effect using JavaScript
+            newTask.style.transform = "scale(0.8)";
+            newTask.style.opacity = "0";
+            setTimeout(() => {
+                newTask.style.transition = "transform 0.4s ease-out, opacity 0.4s";
+                newTask.style.transform = "scale(1)";
+                newTask.style.opacity = "1";
+            }, 10);
+        }; 
+    
+        // Attach the event listener to detect when scrolling is done
+        window.addEventListener("scrollend", onScrollEnd);
+    } visualEffects(newTask);
+    
+    
 
-    // Clear both input fields for additional entries
+    // Clear all input fields for new entries
     submitText.value = "";
     descriptionText.value = "";
     priorityField.value = "medium";
@@ -333,7 +376,8 @@ function handleClick(event) {
         completed: completed,
         deadline: deadlineOutput,
         priority: priority,
-        completionDate: completionDate
+        completionDate: completionDate,
+        orderID: orderID
         /* Additional data points from e.g localStorageHandler can pass new key:value pairs into the localStorage JSON */
     })
 }
@@ -357,7 +401,7 @@ descriptionText.addEventListener("keydown", function(event) {
 // Quick little feature added because it's hard to look at during the night. It has persistent storage as well.
 document.addEventListener("DOMContentLoaded", function() {
     const darkmodeToggle = document.getElementById("darkmodeToggle");
-
+    document.getElementsByTagName("main")
     // Check if dark mode is already enabled in local storage
     if (localStorage.getItem("darkmode") === "enabled") {
         document.body.classList.add("darkmode");

@@ -66,20 +66,23 @@ const storageHandler = {
         } 
         console.log("Tasks successfully loaded");
     },
+    
     // TODO: Create a new function called generateUniqueOrderID. It will be used to sort tasks around in the list.
-    generateUniqueNumber: function(prefix) { 
-        
-        
+    // Result: Created generateUniqueNumber instead for more versatility and reusability :3
+    generateUniqueNumber: function(identifier) { 
+        if (!this.storageTest()) {
+            console.error("Cannot generate a unique number. LocalStorage is unavailable. Your new unique number may be duplicate");
+            return;
+        }
+
         let counter = 0;
         do {
-            if (prefix) {key = `${prefix}-${counter}`}
-            else {key = counter}; // prints "ID" along with the taskID number right after, stringified
-            counter++
-        }  while (localStorage.getItem(key) ||  document.getElementById(key) !== null) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
-            // This way of error handling works good, but the order of tasks might end up different than original
+            counter++;
+            key = `${identifier}-${counter}`
+        }  while (localStorage.getItem(key) ||  document.getElementById(key) !== null) { 
         }                                                        // localStorage will return NULL if the key (storeTaskID) is duplicate or doesn't exist. 
-        console.log('Unique ID generated:'+key);
-        return taskID; // return the ID number as a result of the function
+        console.log('Unique number generated: ' + counter);
+        return counter; // return the ID number as a result of the function
     },
 
     generateUniqueID: function() { 
@@ -93,7 +96,7 @@ const storageHandler = {
             taskID = `ID-${counter}`; // prints "ID" along with the taskID number right after, stringified
             counter++
         }  while (localStorage.getItem(taskID) ||  document.getElementById(taskID) !== null) { //  "while" is good for looping logics and not conditional logics where you might use "if" 
-            // This way of error handling works good, but the order of tasks might end up different than original
+            // This way of error handling works good, but the order of tasks might end up different than originally intended
         }                                                        // localStorage will return NULL if the key (storeTaskID) is duplicate or doesn't exist. 
         console.log('Unique ID generated:'+taskID);
         return taskID; // return the ID number as a result of the function

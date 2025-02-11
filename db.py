@@ -7,11 +7,11 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://taskManager:InsecurePassword132@localhost/taskData?driver=ODBC+Driver+17+for+SQL+Server'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # CORS(app, resources={r"/*": {"origins":"*"}})
-CORS(
-    app, resources={r"/*": {
-     "origins": ["http://localhost:3000", "http://localhost:5000", "http://127.0.0.1:5500", "http://127.0.0.1:5501"], 
-     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
-     "allow_headers": ["Content-Type", "Authorization"]}})
+CORS(app)
+    # app, resources={r"/*": {
+    #  "origins": ["http://localhost:3000", "http://localhost:5000", "null", "http://127.0.0.1:5500", "http://127.0.0.1:5501"], 
+    #  "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+    #  "allow_headers": ["Content-Type", "Authorization","Access-Control-Allow-Origin"]}})
 
 
 db = SQLAlchemy(app)
@@ -36,7 +36,7 @@ with app.app_context():
 
 
 # Send data to the database
-@app.route('/saveTask/<taskID>', methods=["POST", "OPTIONS"])
+@app.route('/saveTask', methods=["POST", "OPTIONS"])
 def save_task():
     data = request.json # Define the function/method list or context manager to use
     taskID = data.get("taskID")
@@ -62,9 +62,9 @@ def save_task():
     return jsonify({"message":"Task successfully saved"}), 200
 
 # Retrieve data from the database
-@app.route('/retrieveTask/<taskID>', methods=["GET"]) 
-def get_task(taskID):
-    task= Task.query.get(taskID) # Sends a query to the SQL server
+@app.route('/retrieveTask', methods=["GET"]) 
+def get_task():
+    task= Task.query.get() # Sends a query to the SQL server
     if task: # If it exists, then:
         return jsonify({
             'taskID': task.taskID,
@@ -80,8 +80,8 @@ def get_task(taskID):
 
 
 # Modify existing data from the database
-@app.route('/editTask/<taskID>', methods=["PUT"]) 
-def edit_task(taskID):
+@app.route('/editTask', methods=["PUT"]) 
+def edit_task():
     data = request.json # Define the function/method list or context manager to use
     task = Task.query.get(taskID)
     if not task:
@@ -99,7 +99,7 @@ def edit_task(taskID):
 
 
 # Delete data from the database
-@app.route('/deleteTask/<taskID>', methods=["DELETE"]) 
+@app.route('/deleteTask', methods=["DELETE"]) 
 def delete_task(taskID):
     params = Task.data.get("parameter")
     if params.get("DeleteAll") == "true":

@@ -1,4 +1,4 @@
-DBstate = 1; // 0 = offline, 1 = online, flip to use. Will be connected to an eventlistener later on
+DBstate = 0; // 0 = active, 1 = inactive, flip to use. Will be connected to an eventlistener later on
 
 const config = {
     // Complete config file with a custom user for this specific purpose.
@@ -17,12 +17,12 @@ const db = {
         if (DBstate == 0) {return;}
         try {
             console.log("Sending task...")
-            let response = await fetch(`http://localhost:5000/saveTask/${taskID}`, {
+            let response = await fetch(`http://localhost:5000/saveTask`, {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
-                    "Access-Control-Allow-Origin":"true"
+                    
                 },
                 body: JSON.stringify({
                     taskID: taskID,
@@ -46,12 +46,12 @@ const db = {
         if (DBstate == 0) {return;}
         try {
             console.log("Retrieving task...")
-            let response = await fetch(`http://localhost:5000/retrieveTask/${taskID}`, {
+            let response = await fetch(`http://localhost:5000/retrieveTask`, {
                 method: "GET",
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
-                    "Access-Control-Allow-Origin":"true"
+                    
                 },
                 body: JSON.stringify({
                     taskID: taskID, // Object keys are treated like strings by default
@@ -71,12 +71,12 @@ const db = {
         if (DBstate == 0) {return;}
         try {
             console.log("Editing task...")
-            let response = await fetch(`http://localhost:5000/editTask/${taskID}`, {
+            let response = await fetch(`http://localhost:5000/editTask`, {
                 method: "PUT",
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
-                    "Access-Control-Allow-Origin":"true"
+                    
                 },
                 body: JSON.stringify({
                     taskID: taskData.taskID,
@@ -98,12 +98,12 @@ const db = {
         if (DBstate == 0) {return;}
         try {
             console.log("Editing task...")
-            let response = await fetch(`http://localhost:5000/deleteTask/${taskID}`, {
-                method: "PUT",
+            let response = await fetch(`http://localhost:5000/deleteTask`, {
+                method: "DELETE",
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
-                    "Access-Control-Allow-Origin":"true"
+                    
                 },
                 body: JSON.stringify({
                     taskID: taskID
@@ -120,12 +120,12 @@ const db = {
         if (DBstate == 0) {return;}
         try {
             console.log("Editing task...")
-            let response = await fetch(`http://localhost:5000/deleteTask/1`, {
-                method: "PUT",
+            let response = await fetch(`http://localhost:5000/deleteTask`, {
+                method: "DELETE",
                 headers: {
                     "Content-Type":"application/json",
                     "DeleteAll":"false",
-                    "Access-Control-Allow-Origin":"true"
+                    
                 },
                 body: JSON.stringify({
                     taskID: taskID

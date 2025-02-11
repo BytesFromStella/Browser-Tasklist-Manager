@@ -48,13 +48,18 @@ COMPLETED 19.01.25
 - Implement drag and drop for tasks.
 - Implement automatic sorting algorithms for order numbers. If none present, generate one. 
 Use priority as default, and use a drag&drop to assign a value. Decide if there should be a default value for order based on when it's generated. Add a fallback function to this using priority, will only run if an item is falsey
-- Add an alertbox confirmation when a user tries to uncheck a completion box
-- Add CSS- or JS-code to jump to items that have been created. Potential play an animation like a zoom-bounce or flash. Maybe even flashing the border between two colors (like red and green, rapidly).
+- ~~Add an alertbox confirmation when a user tries to uncheck a completion box~~
+COMPLETED 02.07.25
+- ~~Add CSS- or JS-code to jump to items that have been created. Potential play an animation like a zoom-bounce or flash. Maybe even flashing the border between two colors (like red and green, rapidly).~~
+COMPLETED 02.07.25 - Added a bounce effect, no flashing. The browser jumps to the new item you create
 
 # Incorporate a backend
 Incorporate a backend using Flask and Python. 
 - Use Flask to generate new pages. It will push out a new page when you select an option from a menu.
 - Optional: Incorporate data sanitizing using Python
+--
+Kinda hardstuck on this. 
+--
 
 ## Task editing
 Allow existing tasks to be edited by either hitting an "edit" button or double-clicking the list item.
@@ -74,5 +79,5 @@ Click a button to randomly select an image that is pulled from an API. Try to us
 ## Star/rain animation~~ and different hues~~
 ~~Allow the user to toggle between preset hues for the background with a few buttons. Alternatively I'll allow the user to pick the hue themself.~~
 COMPLETED Hues 12.01.25
-Added a dark mode instead. Might shelf this feature
+Added a dark mode instead. Probably gonna shelf this feature
 
